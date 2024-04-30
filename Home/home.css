@@ -26,17 +26,17 @@
 
 .grid .cart {
     grid-area: cart;
-    background-color: aquamarine;
+    background-color: whitesmoke;
 }
 
 .grid footer {
     grid-area: footer;
-    background-color:antiquewhite;
+    background-color:rgb(212, 211, 211)
 }
 
 /* Header */
 
-ul {
+ul.header {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -58,4 +58,34 @@ ul {
   
   li a:hover {
     background-color: #111111;
+  }
+
+  ul.addItem {
+    list-style-type: none;
+    margin-right: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+  }
+
+  li.addItem {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 10px; 
+  }
+  
+  li.quantity {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 10px; 
+  }
+
+  button {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    border-radius: 50%;
   }
