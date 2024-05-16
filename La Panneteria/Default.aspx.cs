@@ -53,6 +53,10 @@ namespace La_Panneteria
                     MessageBox.Show(ex.Message);
                 }*/
             }
+            HttpCookie cookie = new HttpCookie("SessionToken");
+            cookie.Secure = true;
+            cookie.Value = SessionManager.GetInstance.GetSessionToken();
+            Response.Cookies.Add(cookie);
             Response.Write("Se hizo el login OK");
 
         }

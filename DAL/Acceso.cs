@@ -212,5 +212,56 @@ namespace DAL
             }
 
         }
+
+
+        // Stored procedure que permite pedir output variables
+        //public void LeerSPRTO(string SPName, Hashtable Params, ref Hashtable ReturnValues )
+        public SqlParameterCollection LeerSPRTO(string SPName, List<SqlParameter> parameters)
+        {
+            oCnn.Open();
+            // ReturnValues = new Hashtable();
+            SqlCommand comm = new SqlCommand(SPName, oCnn);
+            comm.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                //creo el data adapter le paso la consulta y la conexion
+                SqlDataAdapter Da = new SqlDataAdapter(comm);
+                //SqlParameter retValue = comm.Parameters.Add("@RetValue", SqlDbType.Int);
+                //retValue.Direction = ParameterDirection.ReturnValue;
+                if (parameters != null)
+                {
+                    foreach (SqlParameter key in parameters)
+                    {
+                        comm.Parameters.Add(key);
+                    }
+                }
+                //lleno la tabla con el metodo fill
+
+                int a = comm.ExecuteNonQuery();
+                /*
+                foreach (string key in ReturnValues.Keys)
+                {
+                    SqlParameter retValue = comm.Parameters.Add("@RetValue", SqlDbType.Int);
+                    retValue.Direction = ParameterDirection.ReturnValue;
+                    ReturnValues[key] = comm.Parameters[key].Value.ToString();
+                }
+                ReturnValues.Add("@RetValues", retValue.Value.ToString());
+                */
+                
+                return comm.Parameters;
+
+            }
+            catch (SqlException ex)
+            { throw ex; }
+            catch (Exception ex)
+            { throw ex; }
+            finally
+            { //cierro la Conexion
+                oCnn.Close();
+            }
+
+        }
+
     }
 }

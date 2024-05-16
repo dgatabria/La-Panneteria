@@ -52,7 +52,9 @@ namespace Security
 
         public Traductor Traductor { get; set; }
 
+        private string SessionToken { get; set; }
 
+        public string GetSessionToken() { return SessionToken; }
         public static SessionManager GetInstance
         {
             get
@@ -99,8 +101,8 @@ namespace Security
 
                 BLLogin checkLogin = new BLLogin();
 
-                int i = checkLogin.ValidarUsuario(tmpusuario);
-                if (i == 3)
+                string i = checkLogin.ValidarUsuario(tmpusuario);
+                /*if (i == 3)
                 {
                     throw new Exception("msgerror_sessionmgr_errordv");
                 }
@@ -115,8 +117,8 @@ namespace Security
                 if (i == 2)
                 {
                     throw new Exception("msgerror_sessionmgr_usuariobloqueado");
-                }
-                if (i == 1)
+                }*/
+                if (i != "")
                 {
                     BLLUsuario bllu = new BLLUsuario();
                     tmpusuario = bllu.ListarObjeto(tmpusuario);
@@ -125,6 +127,7 @@ namespace Security
                     _session.FechaInicio = DateTime.Now;
                     _session.Traductor = new Traductor();
                     _session.Traductor.SeleccionarIdioma(tmpusuario.Idioma);
+                    _session.SessionToken = i;
 
                     return;
                 }
