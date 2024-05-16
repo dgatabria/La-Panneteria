@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AbstractionLayer;
+using DAL;
+using BusinessEntities;
+
 
 namespace BLL
 {

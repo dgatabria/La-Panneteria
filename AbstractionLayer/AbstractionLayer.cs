@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractionLayer
 {
-    public class AbstractionLayer
-    {
+
         public interface IGestor<T> where T : IEntidad
         {
             bool Guardar(T Objeto);
@@ -16,5 +15,5 @@ namespace AbstractionLayer
             List<T> ListarTodo();
             T ListarObjeto(T Objeto);
         }
-    }
+    
 }

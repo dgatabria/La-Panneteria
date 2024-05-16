@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Security.Crypto;
+using BusinessEntities;
+using BLL;
 
 namespace Security
 {

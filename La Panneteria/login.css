@@ -1,0 +1,34 @@
+﻿
+ul.login {
+    list-style-type: none;
+    margin-right: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+}
+
+li.login {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+div.body {
+    background-color: rgb(211, 216, 214);
+    width: 280px;
+    text-align: center;
+}
+
+input[type=submit] {
+    padding: 5px 15px;
+    background-color: rgb(40, 40, 100);
+    color: aliceblue;
+    border: 0 none;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}

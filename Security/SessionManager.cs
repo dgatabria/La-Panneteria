@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using BusinessEntities;
+using BLL;
+using AbstractionLayer;
 namespace Security
 {
     public class Traductor
@@ -78,7 +80,7 @@ namespace Security
             if (_session == null)
             {
                 // Regex de usuario
-                Regex re = new Regex("^[a-zA-Z]+$");
+                Regex re = new Regex("^[a-zA-Z@\\.]+$");
                 Crypto sec = new Crypto();
 
                 if (!re.IsMatch(usuario.username))

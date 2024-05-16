@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using DAL;
+using BusinessEntities;
 using System.Threading.Tasks;
 
 namespace BLL
