@@ -81,6 +81,9 @@ namespace Security
                     _session.Traductor = new Traductor();
                     _session.Traductor.SeleccionarIdioma(tmpusuario.Idioma);
                     _session.SessionToken = token;
+
+                    return true;
+
                 } else
                 {
                     return false;
@@ -106,9 +109,9 @@ namespace Security
         }
         public static void Login(BEUsuario usuario)
         {
-            if (_session == null)
-            {
-                // Regex de usuario
+            //           if (_session == null)
+            //            {
+            // Regex de usuario
                 Regex re = new Regex("^[a-zA-Z@\\.]+$");
                 Crypto sec = new Crypto();
 
@@ -127,8 +130,11 @@ namespace Security
                 tmpusuario.Hashedpassword = sec.GenerarMD5(usuario.Password);
 
                 BLLogin checkLogin = new BLLogin();
+                try
+                {
+                    string i = checkLogin.ValidarUsuario(tmpusuario);
 
-                string i = checkLogin.ValidarUsuario(tmpusuario);
+
                 /*if (i == 3)
                 {
                     throw new Exception("msgerror_sessionmgr_errordv");
@@ -145,6 +151,7 @@ namespace Security
                 {
                     throw new Exception("msgerror_sessionmgr_usuariobloqueado");
                 }*/
+
                 if (i != "")
                 {
                     BLLUsuario bllu = new BLLUsuario();
@@ -159,12 +166,17 @@ namespace Security
                     return;
                 }
                 throw new Exception("msgerror_sessionmgr_systemerror");
+                }
+                catch (Exception ex)
+                {
+                throw ex;
+                }
 
-            }
-            else
-            {
-                throw new Exception(GetInstance.Traductor.IdiomaSeleccionado.Palabras["msgerror_sessionmgr_sesionyainiciada"].ToString());
-            }
+            //            }
+            //            else
+            //            {
+            //                throw new Exception(GetInstance.Traductor.IdiomaSeleccionado.Palabras["msgerror_sessionmgr_sesionyainiciada"].ToString());
+            //            }
 
         }
         public static void Logout()

@@ -35,7 +35,26 @@
         </header>
         
         <div class="menu">
-          <div>
+            <%
+                BLL.BLLArticulo bla = new BLL.BLLArticulo();
+                List<BusinessEntities.BEArticulo> arts = bla.ListarTodos();
+                foreach (BusinessEntities.BEArticulo articulo in arts)
+                {
+                    Response.Write("<div><img src=\"" + articulo.URL + "\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
+                    //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
+                    Response.Write("<p>"+ articulo.Descripcion + "</p>");
+                    Response.Write("<h5>$"+ articulo.PrecioUnitario + "</h5>");
+                    Response.Write("<ul class=\"addItem\">");
+                    Response.Write("<li class=\"addItem\">");
+                    Response.Write("<button>-</button></li>");
+                    Response.Write("<li class=\"quantity\">");
+                    Response.Write("<div>0</div></li>");
+                    Response.Write("<li class=\"addItem\">");
+                    Response.Write("<button>+</button></li></ul></div>");
+                }
+
+                %>
+         <!-- <div>
               <img src="https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp" alt="Pan" width="95%">
               <p>Pan Casero (x kg)</p>
               <h5>$2200</h5>
@@ -147,8 +166,8 @@
                 <button>+</button>
               </li>
             </ul>
-          </div>
-        </div>
+          </div>-->
+        </div> 
 
         <div class="cart">
           <h2>Su pedido</h2>

@@ -80,7 +80,8 @@ namespace BLL
                     tmpart.Codigo = Convert.ToInt32(fila["ID"]);
                     tmpart.Descripcion = fila["Descripcion"].ToString();
                     tmpart.PrecioUnitario = Convert.ToDouble(fila["Precio"].ToString());
-
+                    tmpart.URL = fila["URL"].ToString();
+                    tmpart.Categoria = fila["CATEGORIA"].ToString();
                     ba.Add(tmpart);
                 }
             }

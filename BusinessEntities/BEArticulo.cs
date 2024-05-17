@@ -15,6 +15,8 @@ namespace BusinessEntities
 
         public string RecetaENC { get; set; }
 
+        public string URL { get; set; }
+        public string Categoria { get; set; }
         public override string ToString()
         {
             return Descripcion;
