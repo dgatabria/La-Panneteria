@@ -57,7 +57,8 @@ namespace La_Panneteria
             cookie.Secure = true;
             cookie.Value = SessionManager.GetInstance.GetSessionToken();
             Response.Cookies.Add(cookie);
-            Response.Write("Se hizo el login OK");
+            Response.Redirect("/Main");
+            //Response.Write("Se hizo el login OK");
 
         }
 

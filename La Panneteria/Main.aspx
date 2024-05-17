@@ -1,4 +1,17 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="La_Panneteria.WebForm1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="La_Panneteria.WebForm1"%>
+<% 
+    if (Request.Cookies["SessionToken"] != null)
+    {
+        HttpCookie SessionCookie = Request.Cookies["SessionToken"];
+        //Response.Write("Testeando cookie de sesion: " + SessionCookie.Value.ToString());
+        if (! Security.SessionManager.VerificarToken(SessionCookie.Value.ToString()))
+        {
+            Response.Redirect("/Default");
+        } 
+    } else {
+        Response.Redirect("/Default");
+    }
+    %>
 
 <!DOCTYPE html>
 <html lang="en">

@@ -65,6 +65,33 @@ namespace Security
 
         }
 
+        public static bool VerificarToken(string token)
+        {
+            if (string.IsNullOrEmpty(token)) return false;
+            BLLogin checkToken = new BLLogin();
+            BEUsuario tmpusuario;
+            if (_session == null)
+            {
+                tmpusuario = checkToken.VerificarToken(token);
+                if (tmpusuario != null)
+                {
+                    _session = new SessionManager();
+                    _session.Usuario = tmpusuario;
+                    _session.FechaInicio = DateTime.Now;
+                    _session.Traductor = new Traductor();
+                    _session.Traductor.SeleccionarIdioma(tmpusuario.Idioma);
+                    _session.SessionToken = token;
+                } else
+                {
+                    return false;
+                }
+
+            }
+
+                
+            return checkToken.VerificarToken(Security.SessionManager.GetInstance.Usuario, token);
+
+        }
         public static bool TengoPermiso(string NombrePermiso)
         {
             if (_session == null) throw new Exception("Sesion no iniciada");

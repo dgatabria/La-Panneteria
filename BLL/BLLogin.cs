@@ -59,6 +59,52 @@ namespace BLL
             return "";
 
         }
+        public bool VerificarToken(BEUsuario usuario, string token)
+        {
+            bd = new Acceso();
+            string Query = "VerificarToken";
+            Hashtable ht = new Hashtable();
+            ht.Add("@username", usuario.username);
+            ht.Add("@Token", token);
+            int i = bd.LeerSPRT(Query, ht);
+            if ( i == 1 )
+            {
+                return true;
+            }
+            return false;
+        }
+        public BEUsuario VerificarToken(string token)
+        {
+            bd = new Acceso();
+            DataTable tablas;
+            string Query = "ObtenerUsuarioDelToken";
+            Hashtable ht = new Hashtable();
+            ht.Add("@Token", token);
+            tablas = bd.LeerSP(Query, ht);
+            BEUsuario tmpusuario = null;
+            if (tablas.Rows.Count > 0)
+            { 
+                BEPerfil tmprol;
+                BLLPerfil blpf = new BLLPerfil();
+                BLLIdioma bli = new BLLIdioma();
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    tmpusuario = new BEUsuario();
+                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID_PERFIL"]), fila["PERFIL_NOMBRE"].ToString());
+                    tmpusuario.Codigo = Convert.ToInt32(fila["ID"]);
+                    tmpusuario.username = fila["USERNAME"].ToString();
+                    tmpusuario.Nombre = fila["NAME"].ToString();
+                    tmpusuario.Apellido = fila["SURNAME"].ToString();
+                    tmpusuario.Perfil = blpf.ListarObjeto(tmprol);
+                    BEIdioma bld = new BEIdioma();
+                    bld.Codigo = Convert.ToInt32(fila["IDIOMA"]);
+                    tmpusuario.Idioma = bli.ListarObjeto(bld);
+                    if (Convert.ToInt32(fila["LOCKED"]) > 2) tmpusuario.Locked = true; else tmpusuario.Locked = false;
+                }
+
+            } 
+            return tmpusuario;
+        }
         public int verifyPass(BEUsuario usuario, string pw)
         {
             bd = new Acceso();
@@ -68,8 +114,6 @@ namespace BLL
             ht.Add("@hashedPassword", pw);
             int i = bd.LeerSPRT(Query, ht);
             return i;
-
-
         }
         public int changePass(BEUsuario usuario, string pw)
         {
