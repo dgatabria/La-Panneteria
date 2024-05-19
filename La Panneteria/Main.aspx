@@ -27,62 +27,165 @@
     <script>
         
         let carrito = new Map();
+        let cookie_as_string = '';
 
-        function actualizarCarrito() {
+        // Adapatado de http://www.quirksmode.org/js/cookies.html#script
+        function getCookie(name) {
 
-            let articulos = carrito.keys();
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+
+            for (var i = 0; i < ca.length; i++) {
+
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) {
+                    return decodeURIComponent(c.substring(nameEQ.length, c.length));
+                }
+
+            }
+
+            return null;
+
+        }
+
+        function ObtenerItemsDelPedido(item) {
+
+            oldcookie = getCookie('carrito');
+            //alert(tmpcookie);
+            if (oldcookie === null) {
+                return null;
+            }
+            let ca = oldcookie.split('|');
+            let j = 0;
+            for (let i = 0; i < ca.length; i = i + 4) {
+                //alert('id: ' + ca[i] + '; cantidad: ' + ca[i + 1]  + '; Precio: ' + ca[i +2 ] + '; Descripcion: ' + ca[i + 3 ])
+                index = ca[i];
+                if (index == item) {
+                    let res = { 
+                        Cantidad: ca[i + 1],
+                        Precio: ca[i + 2],
+                        Descripcion: atob(ca[i + 3])
+                    }
+                return res;
+
+                }
+            }
+        }
+        function AgregarAlCarrito(item, precio) {
+            
+            oldcookie = getCookie('carrito');
+            newcookie = ''
+            //alert(tmpcookie);
+            if (oldcookie == null) {
+                desc = btoa(document.getElementById("descripcion_item_" + item).innerHTML);
+                document.cookie = 'carrito=' + item + '|1|' + precio + '|' + desc;
+                ActualizarPedido();
+                return;
+            }
+            let ca = oldcookie.split('|');
+            let j = 0;
+            for (let i = 0; i < ca.length; i = i + 4) {
+                //alert('id: ' + ca[i] + '; cantidad: ' + ca[i + 1]  + '; Precio: ' + ca[i +2 ] + '; Descripcion: ' + ca[i + 3 ])
+                index = ca[i];
+                //alert("comparando " + index + " con " + ca[i]);
+                if (parseInt(index) == item) {
+                   // alert("eran iguales");
+                    j = 1;
+                    cant = parseInt(ca[i + 1]) + 1;
+                    //alert("vieja cant: " + parseint(ca[i + 1]) + '. nueva cant: ' + cant);
+                    if (i > 0) {
+                        newcookie += '|';
+                    }
+                    newcookie += ca[i] + '|' + cant + '|' + ca[i + 2] + '|' + ca[i + 3];
+
+                } else {
+                    if (i > 0) {
+                        newcookie += '|';
+                    }
+                    newcookie += ca[i] + '|' + ca[i + 1] + '|' + ca[i + 2] + '|' + ca[i + 3];
+                }
+            }
+            if (j == 0) {
+                if (newcookie.length > 0) {
+                    newcookie += '|';
+                }
+                newcookie += item + '|1|' + precio + '|' + btoa(document.getElementById("descripcion_item_" + item).innerHTML);
+
+            }
+            document.cookie = 'carrito=' + newcookie;
+            ActualizarPedido();
+        }
+
+        function SacarDelCarrito(item, precio) {
+
+            oldcookie = getCookie('carrito');
+            newcookie = ''
+            //alert(tmpcookie);
+            if (oldcookie === null) {
+                return 0;
+            }
+            let ca = oldcookie.split('|');
+
+            for (let i = 0; i < ca.length; i = i + 4) {
+                //alert('id: ' + ca[i] + '; cantidad: ' + ca[i + 1]  + '; Precio: ' + ca[i +2 ] + '; Descripcion: ' + ca[i + 3 ])
+                index = ca[i];
+                if (index == item) {
+                    j = 1;
+                    if (ca[i + 1] > 0) {
+                        cant = ca[i + 1] - 1;
+                        if (cant == 0) {
+                            document.getElementById("contador_art_" + item).innerHTML = '0';
+                            continue;
+                        }
+                    }
+
+                    if (newcookie.length > 0) {
+                        newcookie += '|';
+                    }
+                    newcookie += ca[i] + '|' + cant + '|' + ca[i + 2] + '|' + ca[i + 3];
+
+                } else {
+                    if (newcookie.length > 0) {
+                        newcookie += '|';
+                    }
+                    newcookie += ca[i] + '|' + ca[i + 1] + '|' + ca[i + 2] + '|' + ca[i + 3];
+                }
+            }
+            if (newcookie == '') {
+                document.cookie = 'carrito=; expires=Thu, 01 Jan 1970 00:00:00 UTC";'
+            } else {
+                document.cookie = 'carrito=' + newcookie;
+            }
+            
+            ActualizarPedido();
+        }
+        function ActualizarPedido() {
+
+            oldcookie = getCookie('carrito');
+            newcookie = ''
             document.getElementById("carrito_de_compras").innerHTML = '<h2>Su pedido</h2>';
-            let total = 0;
-            while (true) {
-                let item = articulos.next();
-                if (item.done) break;
-                if (carrito.get(item.value).Cantidad == 0) { continue; }
-                total += carrito.get(item.value).Precio * carrito.get(item.value).Cantidad;
-                document.getElementById("carrito_de_compras").innerHTML += '<h4>' + carrito.get(item.value).Descripcion + ' x ' + carrito.get(item.value).Cantidad + '</h4>'
+            //alert(tmpcookie);
+            if ((oldcookie == null) || (oldcookie.length == 0)) {
+                
+                document.getElementById("carrito_de_compras").innerHTML += '<br><h3>Total: $0</h3>';
+                return 0;
             }
-            document.getElementById("carrito_de_compras").innerHTML += '<h3>Total: ' + total + '</h3>';
 
+            let ca = oldcookie.split('|');
+            total = 0;
+            for (let i = 0; i < ca.length; i = i + 4) {
+                if (ca[i + 1] == null) { continue; }
+                //alert('id: ' + ca[i] + '; cantidad: ' + ca[i + 1]  + '; Precio: ' + ca[i +2 ] + '; Descripcion: ' + ca[i + 3 ])
+                index = ca[i];
+                document.getElementById("contador_art_" + ca[i]).innerHTML = ca[i + 1];
+                document.getElementById("carrito_de_compras").innerHTML += '<h4>' + atob(ca[i + 3]) + ' x ' + ca[i + 1] + '</h4>';
+                total += ca[i + 1] * ca[i + 2];
+            }
+
+            document.getElementById("carrito_de_compras").innerHTML += '<br><h3>Total: $' + total + '</h3>';
         }
 
-        function AgregarAlCarrito(articulo, precio) {
-            if (carrito.get(articulo) === undefined) {
-                let item = {
-                    Descripcion: [""],
-                    Cantidad: [0],
-                    Precio: [0]
-                }
-                carrito.set(articulo, item);
-            }
-
-            item = carrito.get(articulo);
-
-            item.Descripcion = document.getElementById("descripcion_item_" + articulo).innerHTML;
-
-            item.Cantidad++;
-            item.Precio = precio;
-            carrito.set(articulo, item);
-            actualizarCarrito();
-            document.getElementById("contador_art_" + articulo).innerHTML = carrito.get(articulo).Cantidad;
-        }
-        function SacarDelCarrito(articulo, precio) {
-            if (carrito.get(articulo) === undefined) {
-                let item = {
-                    Descripcion: [""],
-                    Cantidad: [0],
-                    Precio: [0]
-                }
-                carrito.set(articulo, item);
-            }
-            item = carrito.get(articulo);
-            item.Descripcion = document.getElementById("descripcion_item_" + articulo).innerHTML;
-            if (item.Cantidad > 0) {
-                item.Cantidad--;
-            }
-            item.Precio = precio;
-            carrito.set(articulo, item);
-            actualizarCarrito();
-            document.getElementById("contador_art_" + articulo).innerHTML = carrito.get(articulo).Cantidad;
-        }
         <% 
         BLL.BLLArticulo bla;
         List<BusinessEntities.BEArticulo> arts;
@@ -239,13 +342,8 @@
         </div> 
 
         <div class="cart" id="carrito_de_compras">
-          <h2>Su pedido</h2>
-          <h4>Pan Casero $2200 x3</h4>
-          <h4>Pan Casero $2200 x3</h4>
-          <h4>Pan Casero $2200 x3</h4>
-          <h4>Pan Casero $2200 x3</h4>
-          <br>
-          <h3>Total $26400</h3>
+          <h2>Haga su pedido!</h2>
+
 
         </div>
         
@@ -258,5 +356,9 @@
         </footer>
       </div>
 </body>
-    <script>ListarTodo();</script>
+    <script>
+        ListarTodo();
+        ActualizarPedido();
+            
+    </script>
 </html>
