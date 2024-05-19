@@ -127,7 +127,7 @@
                 {
             Response.Write("<div align=\"center\"><img src=\"" + articulo.URL + "\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
-            Response.Write("<p><b>"+ articulo.Descripcion + ":</b>&nbsp;");
+            Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
             Response.Write("<ul class=\"addItem\">");
             Response.Write("<li class=\"addItem\">");
@@ -151,7 +151,7 @@
                 {
             Response.Write("<div align=\"center\"><img src=\"" + articulo.URL + "\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
-            Response.Write("<p><b>"+ articulo.Descripcion + ":</b>&nbsp;");
+            Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
             Response.Write("<ul class=\"addItem\">");
             Response.Write("<li class=\"addItem\">");
@@ -175,7 +175,7 @@
                 {
             Response.Write("<div align=\"center\"><img src=\"" + articulo.URL + "\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
-            Response.Write("<p><b>"+ articulo.Descripcion + ":</b>&nbsp;");
+            Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
             Response.Write("<ul class=\"addItem\">");
             Response.Write("<li class=\"addItem\">");
