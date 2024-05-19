@@ -167,7 +167,6 @@
             document.getElementById("carrito_de_compras").innerHTML = '<h2>Su pedido</h2>';
             //alert(tmpcookie);
             if ((oldcookie == null) || (oldcookie.length == 0)) {
-                
                 document.getElementById("carrito_de_compras").innerHTML += '<br><h3>Total: $0</h3>';
                 return 0;
             }
@@ -178,7 +177,10 @@
                 if (ca[i + 1] == null) { continue; }
                 //alert('id: ' + ca[i] + '; cantidad: ' + ca[i + 1]  + '; Precio: ' + ca[i +2 ] + '; Descripcion: ' + ca[i + 3 ])
                 index = ca[i];
-                document.getElementById("contador_art_" + ca[i]).innerHTML = ca[i + 1];
+                if (document.getElementById("contador_art_" + ca[i]) != null) {
+                    document.getElementById("contador_art_" + ca[i]).innerHTML = ca[i + 1];
+                }
+                
                 document.getElementById("carrito_de_compras").innerHTML += '<h4>' + atob(ca[i + 3]) + ' x ' + ca[i + 1] + '</h4>';
                 total += ca[i + 1] * ca[i + 2];
             }
@@ -211,14 +213,7 @@
         }
 
                 %>';
-            let articulos = carrito.keys();
-            while (true) {
-                let item = articulos.next();
-                if (item.done) break;
-                if (carrito.get(item.value).Cantidad == 0) { continue; }    
-                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
-                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
-            }
+            ActualizarPedido();
            
 
 
@@ -246,14 +241,7 @@
                 }
 
            }%>';
-            let articulos = carrito.keys();
-            while (true) {
-                let item = articulos.next();
-                if (item.done) break;
-                if (carrito.get(item.value).Cantidad == 0) { continue; }
-                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
-                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
-            }
+            ActualizarPedido();
         }
         function ListarDulces() {
 
@@ -278,14 +266,7 @@
                 }
 
            }%>';
-            let articulos = carrito.keys();
-            while (true) {
-                let item = articulos.next();
-                if (item.done) break;
-                if (carrito.get(item.value).Cantidad == 0) { continue; }
-                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
-                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
-            }
+            ActualizarPedido();
         }
         function ListarSalados() {
 
@@ -310,14 +291,7 @@
                 }
 
            }%>';
-            let articulos = carrito.keys();
-            while (true) {
-                let item = articulos.next();
-                if (item.done) break;
-                if (carrito.get(item.value).Cantidad == 0) { continue; }
-                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
-                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
-            }
+            ActualizarPedido();
 
            }     
 
