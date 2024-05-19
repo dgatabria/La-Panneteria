@@ -88,12 +88,8 @@ namespace Security
                 {
                     return false;
                 }
-
             }
-
-                
             return checkToken.VerificarToken(Security.SessionManager.GetInstance.Usuario, token);
-
         }
         public static bool TengoPermiso(string NombrePermiso)
         {
