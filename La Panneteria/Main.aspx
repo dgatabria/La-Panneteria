@@ -108,9 +108,13 @@
         }
 
                 %>';
-            for (let i = 0; i < carrito.length; i++) {
-                alert(carrito[i]);
-                document.getElementById("contador_art_" + i).innerHTML = carrito[i];
+            let articulos = carrito.keys();
+            while (true) {
+                let item = articulos.next();
+                if (item.done) break;
+                if (carrito.get(item.value).Cantidad == 0) { continue; }    
+                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
+                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
             }
            
 
@@ -139,6 +143,14 @@
                 }
 
            }%>';
+            let articulos = carrito.keys();
+            while (true) {
+                let item = articulos.next();
+                if (item.done) break;
+                if (carrito.get(item.value).Cantidad == 0) { continue; }
+                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
+                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
+            }
         }
         function ListarDulces() {
 
@@ -163,6 +175,14 @@
                 }
 
            }%>';
+            let articulos = carrito.keys();
+            while (true) {
+                let item = articulos.next();
+                if (item.done) break;
+                if (carrito.get(item.value).Cantidad == 0) { continue; }
+                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
+                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
+            }
         }
         function ListarSalados() {
 
@@ -187,6 +207,15 @@
                 }
 
            }%>';
+            let articulos = carrito.keys();
+            while (true) {
+                let item = articulos.next();
+                if (item.done) break;
+                if (carrito.get(item.value).Cantidad == 0) { continue; }
+                if (document.getElementById("contador_art_" + item.value) === null) { continue; }
+                document.getElementById("contador_art_" + item.value).innerHTML = carrito.get(item.value).Cantidad;
+            }
+
            }     
 
     </script>
