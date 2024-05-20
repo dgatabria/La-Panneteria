@@ -4,11 +4,18 @@
     grid-template-rows: 4rem 10rem auto 200px;
     grid-template-columns: 1fr 1fr 3fr 1fr;
     grid-template-areas:
-        "header header header header"
+        "header header header logout"
         "titulo titulo titulo titulo"
         "menu   menu   menu   cart"
         "footer footer footer footer";
 }
+    .grid .logout {
+        grid-area: logout;
+        background-color: #333333;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
     .grid titulo {
         grid-area: titulo;
         background-color: whitesmoke;
@@ -49,6 +56,13 @@ ul.header {
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+ul.logout {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    align-items: center;
 }
 
 li {

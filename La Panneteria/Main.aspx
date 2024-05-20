@@ -29,6 +29,14 @@
         let carrito = new Map();
         let cookie_as_string = '';
 
+
+        function CerrarSesion() {
+
+            document.cookie = 'SessionToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";'
+            location.reload();
+
+        }
+
         // Adapatado de http://www.quirksmode.org/js/cookies.html#script
         function getCookie(name) {
 
@@ -296,15 +304,23 @@
            }     
 
     </script>
-    <div class="grid">
+    <logout class="grid">
         <header>
           <ul class="header">
             <li><a href="#inicio" onclick="javascript:ListarTodo()">Inicio</a></li>
             <li><a href="#panes" onclick="ListarPanes()">Panes</a></li>
             <li><a href="#dulces" onclick="ListarDulces()">Dulces</a></li>
             <li><a href="#salados" onclick="ListarSalados()">Salados</a></li>
+            
           </ul>
         </header>
+        <logout>
+
+                <ul class="logout">
+
+                  <li><a href="#logout" onclick="CerrarSesion()"><p>Cerrar Sesi&oacute;n</p></a></li>
+                </ul>
+        </logout>
         <titulo>
             <div style="width:100%;background-color:whitesmoke;align-content:center;text-align:center;font-family: 'Brush Script MT', cursive;font-size: 60px;">
                 <p>Nuestros Productos</p>
