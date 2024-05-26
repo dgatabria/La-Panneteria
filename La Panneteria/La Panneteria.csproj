@@ -121,17 +121,25 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CSS\AdminMain.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Home-Admin.aspx" />
+    <Content Include="Images\Admin\ABMInsumos.jpg" />
+    <Content Include="Images\Admin\ABMUsuarios.jpg" />
+    <Content Include="Images\Admin\ABMProductos.jpg" />
     <Content Include="Images\Dulces\torta_cheesecake.jpg" />
     <Content Include="Images\Dulces\torta_chocotorta.jpg" />
     <Content Include="Images\Dulces\torta_frutilla.jpg" />
     <Content Include="Images\Dulces\torta_selvanegra.jpg" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\Logo\logomarron.png" />
+    <Content Include="Images\Logo\logonegro.png" />
     <Content Include="Images\Panes\baguette.jpg" />
     <Content Include="Images\Panes\flautita.jpg" />
     <Content Include="Images\Panes\mignon.jpg" />
+    <Content Include="Images\ppal\panaderia-bg.jpg" />
     <Content Include="Images\Salados\miga3anana.jpg" />
     <Content Include="Images\Salados\miga3huevo.jpg" />
     <Content Include="Images\Salados\miga3jq.jpg" />
@@ -139,7 +147,8 @@
     <Content Include="Images\Salados\miga3pal.jpg" />
     <Content Include="Images\Salados\miga3roque.jpg" />
     <Content Include="Images\Salados\miga3tomate.jpg" />
-    <Content Include="login.css" />
+    <Content Include="Images\WebMaster\Backup.jpg" />
+    <Content Include="CSS\login.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -169,6 +178,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Main.aspx" />
+    <Content Include="Home-Webmaster.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -197,7 +207,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
-    <Content Include="Main.css" />
+    <Content Include="CSS\Main.css" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -230,6 +240,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Home-Admin.aspx.cs">
+      <DependentUpon>Home-Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home-Admin.aspx.designer.cs">
+      <DependentUpon>Home-Admin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -258,6 +275,13 @@
     </Compile>
     <Compile Include="Main.aspx.designer.cs">
       <DependentUpon>Main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home-Webmaster.aspx.cs">
+      <DependentUpon>Home-Webmaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home-Webmaster.aspx.designer.cs">
+      <DependentUpon>Home-Webmaster.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

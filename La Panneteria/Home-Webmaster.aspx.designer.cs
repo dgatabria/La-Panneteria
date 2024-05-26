@@ -11,7 +11,7 @@ namespace La_Panneteria
 {
 
 
-    public partial class _Default
+    public partial class WebForm2
     {
     }
 }

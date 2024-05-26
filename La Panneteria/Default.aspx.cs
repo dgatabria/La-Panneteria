@@ -57,6 +57,58 @@ namespace La_Panneteria
             cookie.Secure = true;
             cookie.Value = SessionManager.GetInstance.GetSessionToken();
             Response.Cookies.Add(cookie);
+            switch (SessionManager.GetInstance.Usuario.Perfil.Nombre)
+            {
+                case "CLIENTE":
+                    Response.Redirect("/Main");
+                    break;
+                case "WEBMASTER":
+                    Response.Redirect("/Home-WebMaster");
+                    break;
+                case "ADMIN":
+                    Response.Redirect("/Home-Admin");
+                    break;
+
+            }
+            
+            //Response.Write("Se hizo el login OK");
+
+        }
+        protected void do_signup(object sender, EventArgs e)
+        {
+            BEUsuario usuario = new BEUsuario();
+            usuario.username = Request.Form["email"];
+            usuario.Password = Request.Form["password"];
+            try
+            {
+                SessionManager.Login(usuario);
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Excepcion: " + ex.Message);
+                return;
+                if (ex.Message == "admin_start_recovery")
+                {
+                    // hacer la parte de recovery
+                    Response.Write("Hay que hacer el recovery del dv");
+                }
+                /*
+                Regex re = new Regex("^msgerror_sessionmgr");
+
+                if (re.IsMatch(ex.Message))
+                {
+                    
+                    MessageBox.Show((comboBox1.SelectedItem as BEIdioma).Palabras[ex.Message].ToString());
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }*/
+            }
+            HttpCookie cookie = new HttpCookie("SessionToken");
+            cookie.Secure = true;
+            cookie.Value = SessionManager.GetInstance.GetSessionToken();
+            Response.Cookies.Add(cookie);
             Response.Redirect("/Main");
             //Response.Write("Se hizo el login OK");
 

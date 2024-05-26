@@ -7,7 +7,18 @@
         if (! Security.SessionManager.VerificarToken(SessionCookie.Value.ToString()))
         {
             Response.Redirect("/Default");
-        } 
+        } else
+                {
+                    switch (Security.SessionManager.GetInstance.Usuario.Perfil.Nombre)
+                     {
+                         case "ADMIN":
+                         Response.Redirect("/Home-Admin");
+                      break;
+                        case "WEBMASTER":
+                         Response.Redirect("/Home-WebMaster");
+                        break;
+                    }
+                }
     } else {
         Response.Redirect("/Default");
     }
@@ -20,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Panneteria</title>
     <link rel="icon" type="image/x-icon" href="../Home/images/favicon.ico">
-    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="/CSS/main.css">
 </head>
 
 <body>
@@ -304,9 +315,11 @@
            }     
 
     </script>
-    <logout class="grid">
+    <div class="grid">
         <header>
+            
           <ul class="header">
+            <li><a href="#inicio" onclick="javascript:ListarTodo()"><img src="/Images/Logo/logonegro.png" height="50" /></a></li>
             <li><a href="#inicio" onclick="javascript:ListarTodo()">Inicio</a></li>
             <li><a href="#panes" onclick="ListarPanes()">Panes</a></li>
             <li><a href="#dulces" onclick="ListarDulces()">Dulces</a></li>
