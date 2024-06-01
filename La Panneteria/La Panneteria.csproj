@@ -121,6 +121,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CSS\WebMasterMain.css" />
     <Content Include="CSS\AdminMain.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -129,6 +130,8 @@
     <Content Include="Images\Admin\ABMInsumos.jpg" />
     <Content Include="Images\Admin\ABMUsuarios.jpg" />
     <Content Include="Images\Admin\ABMProductos.jpg" />
+    <Content Include="Images\Admin\delete.svg" />
+    <Content Include="Images\Admin\pass.svg" />
     <Content Include="Images\Dulces\torta_cheesecake.jpg" />
     <Content Include="Images\Dulces\torta_chocotorta.jpg" />
     <Content Include="Images\Dulces\torta_frutilla.jpg" />
