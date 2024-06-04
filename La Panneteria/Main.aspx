@@ -179,14 +179,24 @@
             
             ActualizarPedido();
         }
+
+        function cerrar_pedido() {
+            document.cookie = 'carrito=; expires=Thu, 01 Jan 1970 00:00:00 UTC";'
+            
+            alert("Su pedido ha sido enviado");
+            location.reload();
+        }
+
+
         function ActualizarPedido() {
 
             oldcookie = getCookie('carrito');
             newcookie = ''
-            document.getElementById("carrito_de_compras").innerHTML = '<h2>Su pedido</h2>';
+            document.getElementById("carrito_de_compras").innerHTML = '<div align=\"center\"><h2>Su pedido</h2><br /></div>';
             //alert(tmpcookie);
             if ((oldcookie == null) || (oldcookie.length == 0)) {
-                document.getElementById("carrito_de_compras").innerHTML += '<br><h3>Total: $0</h3>';
+                document.getElementById("carrito_de_compras").innerHTML += '<br><div align=\"center\"><h3>&nbsp;&nbsp;¡An&iacute;mese!</h3></div></div>';
+                document.getElementById("carrito_de_compras").innerHTML = '<div class=\"contenedorcarrito\">' + document.getElementById("carrito_de_compras").innerHTML + '</div>';
                 return 0;
             }
 
@@ -200,11 +210,13 @@
                     document.getElementById("contador_art_" + ca[i]).innerHTML = ca[i + 1];
                 }
                 
-                document.getElementById("carrito_de_compras").innerHTML += '<h4>' + atob(ca[i + 3]) + ' x ' + ca[i + 1] + '</h4>';
+                document.getElementById("carrito_de_compras").innerHTML += '<h4>&nbsp;&nbsp;' + atob(ca[i + 3]) + ' x ' + ca[i + 1] + '</h4>';
                 total += ca[i + 1] * ca[i + 2];
             }
 
-            document.getElementById("carrito_de_compras").innerHTML += '<br><h3>Total: $' + total + '</h3>';
+            document.getElementById("carrito_de_compras").innerHTML += '<br><div align=\"right\"><h3>Total: $' + total + '&nbsp;&nbsp;</h3></div>';
+            document.getElementById("carrito_de_compras").innerHTML += '<br><div class=\"botoncerrarpedido\" onclick="cerrar_pedido()" ><div>Terminar</div>';
+            document.getElementById("carrito_de_compras").innerHTML = '<div class=\"contenedorcarrito\">' + document.getElementById("carrito_de_compras").innerHTML + '</div>';
         }
 
         <% 
@@ -218,17 +230,23 @@
         arts = bla.ListarTodos();
         foreach (BusinessEntities.BEArticulo articulo in arts)
         {
-            Response.Write("<div align=\"center\"><img src=\"" + articulo.URL + "\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
+            Response.Write("<div class=\"menuitem\" align=\"center\"><br /><img src=\"" + articulo.URL + "\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
-            Response.Write("<ul class=\"addItem\">");
-            Response.Write("<li class=\"addItem\">");
-            Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
-            Response.Write("<li class=\"quantity\">");
-            Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
-            Response.Write("0</div></li><li class=\"addItem\">");
-            Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
+
+            Response.Write("<div class=\"botoneragrid\" >");
+            Response.Write("<boton><div class=\"botoncantidadmenos\" onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</div></boton>");
+            Response.Write("<contador><div class=\"contadoritems\" id=\"contador_art_" + articulo.Codigo.ToString() + "\">0</div></contador>");  
+            Response.Write("<boton><div class=\"botoncantidadmas\" onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</div></div></contador></div>");
+
+            //Response.Write("<div style=\"align:center;margin-left:auto;margin-right:auto;border:3px solid #4A75A8;text-align:center;\"><ul class=\"addItem\">");
+            //Response.Write("<li class=\"addItem\">");
+            //Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
+            //Response.Write("<li class=\"quantity\">");
+            //Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
+            //Response.Write("0</div></li><li class=\"addItem\">");
+            //Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div></div>");
         }
 
                 %>';
@@ -250,13 +268,18 @@
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
-            Response.Write("<ul class=\"addItem\">");
-            Response.Write("<li class=\"addItem\">");
-            Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
-            Response.Write("<li class=\"quantity\">");
-            Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
-            Response.Write("0</div></li><li class=\"addItem\">");
-            Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
+            Response.Write("<div class=\"botoneragrid\" >");
+            Response.Write("<boton><div class=\"botoncantidadmenos\" onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</div></boton>");
+            Response.Write("<contador><div class=\"contadoritems\" id=\"contador_art_" + articulo.Codigo.ToString() + "\">0</div></contador>");  
+            Response.Write("<boton><div class=\"botoncantidadmas\" onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</div></div></contador></div>");
+
+            //Response.Write("<ul class=\"addItem\">");
+            //Response.Write("<li class=\"addItem\">");
+            //Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
+            //Response.Write("<li class=\"quantity\">");
+            //Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
+            //Response.Write("0</div></li><li class=\"addItem\">");
+            //Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
                 }
 
            }%>';
@@ -275,13 +298,18 @@
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
-            Response.Write("<ul class=\"addItem\">");
-            Response.Write("<li class=\"addItem\">");
-            Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
-            Response.Write("<li class=\"quantity\">");
-            Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
-            Response.Write("0</div></li><li class=\"addItem\">");
-            Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
+            Response.Write("<div class=\"botoneragrid\" >");
+            Response.Write("<boton><div class=\"botoncantidadmenos\" onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</div></boton>");
+            Response.Write("<contador><div class=\"contadoritems\" id=\"contador_art_" + articulo.Codigo.ToString() + "\">0</div></contador>");  
+            Response.Write("<boton><div class=\"botoncantidadmas\" onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</div></div></contador></div>");
+
+            //Response.Write("<ul class=\"addItem\">");
+            //Response.Write("<li class=\"addItem\">");
+            //Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
+            //Response.Write("<li class=\"quantity\">");
+            //Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
+            //Response.Write("0</div></li><li class=\"addItem\">");
+            //Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
                 }
 
            }%>';
@@ -300,13 +328,18 @@
             //Response.Write("<div><img src=\"https://assets.elgourmet.com/wp-content/uploads/2023/03/pan-f_hspYqgfrL7zVJKc6X13BFWkPMdnITx-1024x683.png.webp\" alt=\"" + articulo.Descripcion + "\" width=\"95%\">");
             Response.Write("<p id=\"descripcion_item_" + articulo.Codigo + "\"><b>"+ articulo.Descripcion + ":</b>&nbsp;");
             Response.Write("$"+ articulo.PrecioUnitario + "</p>");
-            Response.Write("<ul class=\"addItem\">");
-            Response.Write("<li class=\"addItem\">");
-            Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
-            Response.Write("<li class=\"quantity\">");
-            Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
-            Response.Write("0</div></li><li class=\"addItem\">");
-            Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
+            Response.Write("<div class=\"botoneragrid\" >");
+            Response.Write("<boton><div class=\"botoncantidadmenos\" onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</div></boton>");
+            Response.Write("<contador><div class=\"contadoritems\" id=\"contador_art_" + articulo.Codigo.ToString() + "\">0</div></contador>");  
+            Response.Write("<boton><div class=\"botoncantidadmas\" onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</div></div></contador></div>");
+
+            //Response.Write("<ul class=\"addItem\">");
+            //Response.Write("<li class=\"addItem\">");
+            //Response.Write("<button onclick=\"SacarDelCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">-</button></li>");
+            //Response.Write("<li class=\"quantity\">");
+            //Response.Write("<div id=\"contador_art_" + articulo.Codigo.ToString() + "\">");  
+            //Response.Write("0</div></li><li class=\"addItem\">");
+            //Response.Write("<button onclick=\"AgregarAlCarrito(" + articulo.Codigo.ToString() + "," + articulo.PrecioUnitario.ToString() + ")\">+</button></li></ul></div>");
                 }
 
            }%>';
