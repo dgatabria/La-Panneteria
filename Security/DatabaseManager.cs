@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL;
 using BusinessEntities;
+using System.Data;
 
 namespace Security
 {
@@ -22,6 +23,10 @@ namespace Security
         public void RecalculaDV()
         {
             bd.RecalculaDV();
+        }
+        public DataTable CalculaDV()
+        {
+            return bd.CalculaDV();
         }
     }
 }

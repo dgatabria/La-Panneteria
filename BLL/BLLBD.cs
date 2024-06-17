@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using BusinessEntities;
+using System.Data;
 
 
 namespace BLL
@@ -43,12 +44,21 @@ namespace BLL
         {
             Hashtable tmp = new Hashtable();
 
-            string Query = "RecalculaDV";
+            string Query = "ActualizaDV";
             bd = new Acceso();
             Hashtable ht = new Hashtable();
 
 
             bd.LeerSPRT(Query, ht);
+        }
+        public DataTable CalculaDV()
+        {
+            Hashtable tmp = new Hashtable();
+
+            string Query = "VerificaDV";
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+            return bd.LeerSP(Query, ht);
         }
     }
 }

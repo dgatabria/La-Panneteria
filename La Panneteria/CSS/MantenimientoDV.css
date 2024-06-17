@@ -1,0 +1,194 @@
+﻿/* Grid Display */
+
+
+.tabla_usuarios {
+    border-collapse: collapse;
+    border: 1px solid #69899F;
+}
+
+.tabla_usuarios td {
+    border: 1px dotted #000000;
+    padding: 5px;
+}
+
+.tabla_usuarios td:first-child {
+        border-left: 0px solid #000000;
+}
+
+.tabla_usuarios th {
+    border: 2px solid #69899F;
+    padding: 5px;
+
+}
+    .tabla_usuarios tr:hover {
+        background-color: #B8D1F3;
+    }
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    width: fit-content;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+   /* width: 280px; /* Could be more or less, depending on screen size */
+    justify-content: center;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+}
+
+.grid {
+    display: grid;
+    grid-template-rows: 4rem 10rem 3rem auto 200px;
+    grid-template-columns: 1fr 1fr 3fr 1fr;
+    grid-template-areas:
+        "header header header logout"
+        "titulo titulo titulo titulo"
+        "mensaje mensaje mensaje mensaje"
+        "menu   menu   menu   menu"
+        "footer footer footer footer";
+}
+    .grid .logout {
+        grid-area: logout;
+        background-color: black;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .grid titulo {
+        grid-area: titulo;
+        background-color: whitesmoke;
+        justify-content: center;
+    }
+    .grid mensaje {
+        grid-area: mensaje;
+        background-color: whitesmoke;
+        justify-content: center;
+    }
+    .grid header {
+        grid-area: header;
+        background-color: black;
+    }
+
+    .grid .menu {
+        grid-area: menu;
+        background-color: whitesmoke;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 250px);
+        grid-auto-rows: 350px;
+        grid-gap: 1rem;
+        justify-content: center;
+        line-height: 100%;
+    }
+    .grid .menuitem {
+        background-color: whitesmoke;
+        height: 300px;
+        border: 1px solid rgb(212, 211, 211);
+        border-radius: 5px;
+    }
+    .grid .menuitem:hover {
+         background-color: rgb(212, 211, 211);
+    }
+
+
+    .grid footer {
+        grid-area: footer;
+        background-color: rgb(212, 211, 211)
+    }
+
+/* Header */
+
+
+
+ul.header {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+ul.logout {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    align-items: center;
+}
+
+li {
+    float: left;
+    padding: 0;
+}
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+        li a:hover {
+            background-color: #222222;
+        }
+
+ul.addItem {
+    list-style-type: none;
+    margin-right: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    
+}
+
+li.addItem {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+li.quantity {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+/*
+    button {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    border-radius: 50%;
+}
+
+*/

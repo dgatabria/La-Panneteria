@@ -130,23 +130,57 @@ namespace Security
                 {
                     string i = checkLogin.ValidarUsuario(tmpusuario);
 
+                    if (i != "")
+                    {
+                        BLLUsuario bllu = new BLLUsuario();
+                        tmpusuario = bllu.ListarObjeto(tmpusuario);
+                        _session = new SessionManager();
+                        _session.Usuario = tmpusuario;
+                        _session.FechaInicio = DateTime.Now;
+                        _session.Traductor = new Traductor();
+                        _session.Traductor.SeleccionarIdioma(tmpusuario.Idioma);
+                        _session.SessionToken = i;
 
-                /*if (i == 3)
-                {
-                    throw new Exception("msgerror_sessionmgr_errordv");
+                        return;
+                    }
+                    throw new Exception("msgerror_sessionmgr_systemerror");
                 }
-                if (i == 4)
+                catch (Exception ex)
                 {
-                    throw new Exception("admin_start_recovery");
+                    throw ex;
                 }
-                if (i == 0)
-                {
-                    throw new Exception("msgerror_sessionmgr_loginincorrecto");
-                }
-                if (i == 2)
-                {
-                    throw new Exception("msgerror_sessionmgr_usuariobloqueado");
-                }*/
+
+            //            }
+            //            else
+            //            {
+            //                throw new Exception(GetInstance.Traductor.IdiomaSeleccionado.Palabras["msgerror_sessionmgr_sesionyainiciada"].ToString());
+            //            }
+
+        }
+        public static void WebMasterLogin(BEUsuario usuario)
+        {
+
+            Regex re = new Regex("^[a-zA-Z@\\.]+$");
+            Crypto sec = new Crypto();
+
+            if (!re.IsMatch(usuario.username))
+            {
+                throw new Exception("msgerror_sessionmgr_invaliduser");
+            }
+            re = new Regex("['\";]");
+            if (re.IsMatch(usuario.Password))
+            {
+                throw new Exception("msgerror_sessionmgr_invalidpass");
+            }
+
+            BEUsuario tmpusuario = new BEUsuario();
+            tmpusuario.username = usuario.username;
+            tmpusuario.Hashedpassword = sec.GenerarMD5(usuario.Password);
+
+            BLLogin checkLogin = new BLLogin();
+            try
+            {
+                string i = checkLogin.ValidarWebMaster(tmpusuario);
 
                 if (i != "")
                 {
@@ -162,11 +196,11 @@ namespace Security
                     return;
                 }
                 throw new Exception("msgerror_sessionmgr_systemerror");
-                }
-                catch (Exception ex)
-                {
+            }
+            catch (Exception ex)
+            {
                 throw ex;
-                }
+            }
 
             //            }
             //            else

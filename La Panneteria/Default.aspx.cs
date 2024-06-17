@@ -33,25 +33,36 @@ namespace La_Panneteria
             }
             catch (Exception ex)
             {
-                Response.Write("Excepcion: " + ex.Message);
-                return;
+                //
+                
                 if (ex.Message == "admin_start_recovery")
                 {
-                    // hacer la parte de recovery
-                    Response.Write("Hay que hacer el recovery del dv");
-                }
-                /*
-                Regex re = new Regex("^msgerror_sessionmgr");
-
-                if (re.IsMatch(ex.Message))
-                {
+                    // El DV está roto y el usuario es admin. Hacer la parte de recovery
+                    //Response.Write("Hay que hacer el recovery del dv");
+                    //Server.Transfer("/MantenimientoDV",true);
+                    try
+                    {
+                        SessionManager.WebMasterLogin(usuario);
+                        HttpCookie cookie2 = new HttpCookie("SessionToken");
+                        cookie2.Secure = true;
+                        cookie2.Value = SessionManager.GetInstance.GetSessionToken();
+                        Response.Cookies.Add(cookie2);
+                    } catch (Exception ex2) {
+                        Response.Write("<script>alert(\"La base está dañada y no funciona la cuenta de webmaster. Excepcion:" + ex2.Message +" Se recomienda restaurar la base.\")</script>");
+                        return;
+                    }
                     
-                    MessageBox.Show((comboBox1.SelectedItem as BEIdioma).Palabras[ex.Message].ToString());
+                    Response.Redirect("/MantenimientoDV");
+                    return;
                 }
-                else
+                if (ex.Message == "msgerror_sessionmgr_errordv")
                 {
-                    MessageBox.Show(ex.Message);
-                }*/
+                    // el DV está mal, pero el usuario no es admin.
+                    Response.Write("<script>alert(\"El sistema no está disponible en este momento. Inténtelo más tarde.\")</script>");
+                    return;
+                }
+                Response.Write("Excepcion: " + ex.Message);
+                return;
             }
             HttpCookie cookie = new HttpCookie("SessionToken");
             cookie.Secure = true;
@@ -87,23 +98,7 @@ namespace La_Panneteria
             {
                 Response.Write("Excepcion: " + ex.Message);
                 return;
-                if (ex.Message == "admin_start_recovery")
-                {
-                    // hacer la parte de recovery
-                    Response.Write("Hay que hacer el recovery del dv");
-                }
-                /*
-                Regex re = new Regex("^msgerror_sessionmgr");
-
-                if (re.IsMatch(ex.Message))
-                {
-                    
-                    MessageBox.Show((comboBox1.SelectedItem as BEIdioma).Palabras[ex.Message].ToString());
-                }
-                else
-                {
-                    MessageBox.Show(ex.Message);
-                }*/
+ 
             }
             HttpCookie cookie = new HttpCookie("SessionToken");
             cookie.Secure = true;

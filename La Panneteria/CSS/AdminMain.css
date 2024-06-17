@@ -78,7 +78,7 @@
 
     .grid .logout {
         grid-area: logout;
-        background-color: #333333;
+        background-color: black;
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -92,7 +92,7 @@
 
     .grid header {
         grid-area: header;
-        background-color: #333333;
+        background-color: black;
     }
 
     .grid .menu {
@@ -109,6 +109,8 @@
     .grid .menuitem {
         background-color: whitesmoke;
         height: 300px;
+        border: 1px solid rgb(212, 211, 211);
+        border-radius: 5px;
     }
 
         .grid .menuitem:hover {
@@ -154,7 +156,7 @@ li {
     }
 
         li a:hover {
-            background-color: #111111;
+            background-color: #222222;
         }
 
 ul.addItem {
