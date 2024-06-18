@@ -38,17 +38,7 @@
 </head>
 
 <body>
-    <!-- The Modal -->
-<div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content" style="justify-content:center" id="modal-content">
-      
-    <span class="close" id="close_btn">&times;</span>
-  <br /><br />
-  </div>
-
-</div>
     <script>
 
         // Get the modal
@@ -56,14 +46,14 @@
 
         // Get the <span> element that closes the modal
         //var span = document.getElementsByClassName("close")[0];
-        var span = document.getElementsByClassName("close")[0];
-        var modal_contenido_login = '<span class="close" id="close_btn">&times;</span>';
+        //var span = document.getElementsByClassName("close")[0];
+        //var modal_contenido_login = '<span class="close" id="close_btn">&times;</span>';
         //modal_contenido_login += '<table class="tabla_usuarios"><tr class="fila_usuarios"><th class="header_usuarios">Nombre de Usuario</th><th class="header_usuarios">Nombre</th><th class="header_usuarios">Apellido</th><th class="header_usuarios">Rol</th><th class="header_usuarios">Estado</th></tr><tr class="fila_usuarios"><td>admin@lp.com</td><td>Damian</td><td>Gatabria</td><td>Administrador</td><td>Activo</td></tr><tr class="fila_usuarios"><td>webmaster@lp.com</td><td>Eduardo</td><td>Alvarez</td><td>WebMaster</td><td>Activo</td></tr><tr class="fila_usuarios"><td>cliente@lp.com</td><td>Gabriel</td><td>Bernardini</td><td>Cliente</td><td>Activo</td></tr></table>';
         //modal_contenido_login += '</td><td align="center"><br><br><br><button>Desbloquear</button><br><br><button>Cambiar Contraseña</button><br><br><button>Eliminar</button>';
-        modal_contenido_login += '<table class="tabla_usuarios"><tr class="fila_usuarios"><th colspan="4" align="center" class="header_usuarios"><b>Consola de Backup y Restore<b></th><tr><td colspan="4">&nbsp;</td></tr></tr><tr class="fila_usuarios"><th class="header_usuarios">Archivo de Backup:</th><th class="header_usuarios"><input type="text"></input></th><th class="header_usuarios"><button>Examinar</button></th><th class="header_usuarios"><button>Comenzar</button></th></tr><tr class="fila_usuarios"><th class="header_usuarios">Archivo para Restore:</th><th class="header_usuarios"><input type="text"></input></th><th class="header_usuarios"><button>Examinar</button></th><th class="header_usuarios"><button>Comenzar</button></th></tr></table>';
+        //modal_contenido_login += '<table class="tabla_usuarios"><tr class="fila_usuarios"><th colspan="4" align="center" class="header_usuarios"><b>Consola de Backup y Restore<b></th><tr><td colspan="4">&nbsp;</td></tr></tr><tr class="fila_usuarios"><th class="header_usuarios">Archivo de Backup:</th><th class="header_usuarios"><input type="text"></input></th><th class="header_usuarios"><button>Examinar</button></th><th class="header_usuarios"><button>Comenzar</button></th></tr><tr class="fila_usuarios"><th class="header_usuarios">Archivo para Restore:</th><th class="header_usuarios"><input type="text"></input></th><th class="header_usuarios"><button>Examinar</button></th><th class="header_usuarios"><button>Comenzar</button></th></tr></table>';
         function mostrar_modal() {
       
-            document.getElementById("modal-content").innerHTML = modal_contenido_login;
+            document.getElementById("modal-content").innerHTML = document.getElementById("oculto_backup_restore").innerHTML;
             document.getElementById("myModal").style.display = "block";
         }
 
@@ -113,7 +103,40 @@
                         <div align="center" class="menuitem" onclick="mostrar_modal()"><br /><img src="/Images/WebMaster/Backup.jpg" alt="Backup y Restore" width="95%">
                         <p id="texto_backup"><b>Backup y Restore</b></p></div>
         </div> 
-        
+<form runat="server"> 
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content" style="justify-content:center" id="modal-content">
+      
+
+  <br /><br />
+  </div>
+
+</div>
+    <!-- ventana de backup y restore -->
+<div id="oculto_backup_restore" style="visibility:hidden">
+    <span class="close" id="close_btn2">&times;</span>
+   <table class="tabla_usuarios">
+        <tr class="fila_usuarios">
+              <th colspan="5" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Consola de Backup y Restore&nbsp;&nbsp;</b></th>
+        </tr> 
+        <tr>
+              <td>&nbsp;Restore:&nbsp;</td>
+              <td colspan="4"><input id="uploadFile" runat="server" name="uploadFile" type="file" accept=".bak" /></td>
+        </tr>
+        <tr>
+              <td>&nbsp;Backup:&nbsp;</td>
+              <td colspan="4"><button type="button" runat='server' onServerClick='iniciarBackup'>Descargar Backup</button></td>
+        </tr>
+        <tr class="fila_usuarios">
+              <td colspan="4" align="center"><button onclick='document.getElementById("myModal").style.display="none"'>Cancelar</button>&nbsp;&nbsp;
+              </td >
+        </tr >
+   </table > 
+</div>
+</form>        
        
         <footer>
             <br />
