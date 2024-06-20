@@ -138,7 +138,7 @@ namespace La_Panneteria
             }
 
             int j = 0;
-            string tabla = "<table><tr><td>Hora</td><td>Criticidad</td><td>Modulo</td><td>Actor</td><td>Mensaje</td></tr>";
+            string tabla = "<table class='tabla_logs'><tr><th>Hora</th><th>Criticidad</th><th>Modulo</th><th>Actor</th><th>Mensaje</th></tr>";
             foreach (BEEventoBitacora evento in lm.ListarEventos(logs_actor.Text, fechaInicio, fechaFin, crits, pi))
             {
                 tabla += "<tr><td>" + evento.Fecha.ToString() + "</td><td>" + evento.Criticidad + "</td><td>" + evento.Modulo + "</td><td>" + evento.Actor + "</td><td>" + evento.Mensaje + "</td></tr>";
@@ -196,13 +196,15 @@ namespace La_Panneteria
 
             }
 
+            }
+        protected void CerrarSesion(object sender, EventArgs args)
+        {
+            HttpCookie cookie2 = new HttpCookie("SessionToken");
+            cookie2.Expires = DateTime.Now;
+            Response.Cookies.Add(cookie2);
 
-
-
-
-            //DatabaseManager dbm = new DatabaseManager();
-            //dbm.RecalculaDV();
-            //Response.Redirect("/Default");
+            SessionManager.Logout();
+            Response.Redirect("/Default");
         }
     }
 }

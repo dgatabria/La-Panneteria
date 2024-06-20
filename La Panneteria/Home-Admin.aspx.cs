@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,15 @@ namespace La_Panneteria
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+        protected void CerrarSesion(object sender, EventArgs args)
+        {
+            HttpCookie cookie2 = new HttpCookie("SessionToken");
+            cookie2.Expires = DateTime.Now;
+            Response.Cookies.Add(cookie2);
+
+            SessionManager.Logout();
+            Response.Redirect("/Default");
         }
     }
 }

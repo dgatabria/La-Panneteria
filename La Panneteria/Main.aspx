@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="La_Panneteria.WebForm1"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="La_Panneteria.WebForm1" EnableEventValidation="false"  %>
 <% 
     if (Request.Cookies["SessionToken"] != null)
     {
@@ -348,6 +348,10 @@
            }     
 
     </script>
+    <form runat="server"> 
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        </form>
     <div class="grid">
         <header>
             
@@ -364,7 +368,7 @@
 
                 <ul class="logout">
 
-                  <li><a href="#logout" onclick="CerrarSesion()"><p>Cerrar Sesi&oacute;n</p></a></li>
+                  <li><a runat="server" onserverclick="CerrarSesion" name="logout" id="logout"><p>Cerrar Sesi&oacute;n</p></a></li>
                 </ul>
         </logout>
         <titulo>

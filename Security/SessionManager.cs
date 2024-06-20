@@ -213,6 +213,8 @@ namespace Security
         {
             if (_session != null)
             {
+                BLLogin checkLogin = new BLLogin();
+                checkLogin.DestruirToken(_session.Usuario, _session.SessionToken);
                 _session = null;
             }
             else

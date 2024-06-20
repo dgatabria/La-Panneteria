@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home-Admin.aspx.cs" Inherits="La_Panneteria.Home_Admin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home-Admin.aspx.cs" Inherits="La_Panneteria.Home_Admin" EnableEventValidation="false"  %>
 <% 
     if (Request.Cookies["SessionToken"] != null)
     {
@@ -35,6 +35,9 @@
 </head>
 
 <body>
+<form runat="server"> 
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -46,6 +49,7 @@
   </div>
 
 </div>
+    </form>
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
@@ -112,7 +116,7 @@
         </header>
         <logout>
                 <ul class="logout">
-                  <li><a href="#logout" onclick="CerrarSesion()"><p>Cerrar Sesi&oacute;n</p></a></li>
+                  <li><a runat="server" onserverclick="CerrarSesion" name="logout" id="logout"><p>Cerrar Sesi&oacute;n</p></a></li>
                 </ul>
         </logout>
         <titulo>

@@ -112,6 +112,20 @@ namespace BLL
             }
             return false;
         }
+        public bool DestruirToken(BEUsuario usuario, string token)
+        {
+            bd = new Acceso();
+            string Query = "DestruirToken";
+            Hashtable ht = new Hashtable();
+            ht.Add("@username", usuario.username);
+            ht.Add("@Token", token);
+            int i = bd.LeerSPRT(Query, ht);
+            if (i == 1)
+            {
+                return true;
+            }
+            return false;
+        }
         public BEUsuario VerificarToken(string token)
         {
             bd = new Acceso();

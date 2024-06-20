@@ -7,7 +7,7 @@
 }
 
 .tabla_usuarios td {
-    border: 1px dotted #000000;
+    border: none;
     padding: 5px;
 }
 
@@ -20,11 +20,34 @@
     padding: 5px;
 
 }
-    .tabla_usuarios tr:hover {
+    .tabla_usuarios td:hover {
         background-color: #B8D1F3;
+}
+
+.tabla_logs {
+    border-collapse: collapse;
+    border: 1px solid #69899F;
+}
+.tabla_logs th{
+    border-collapse: collapse;
+    border: 1px solid #69899F;
+    background-color: #d4d4d4;
+}
+    .tabla_logs tr {
+        border-collapse: collapse;
+        border: 1px solid #69899F;
+        background-color: whitesmoke;
     }
-
-
+    .tabla_logs td {
+        border-collapse: collapse;
+        border: 1px solid #69899F;
+        background-color: whitesmoke;
+    }
+    .tabla_logs td:hover {
+        border-collapse: collapse;
+        border: 1px solid #69899F;
+        background-color: whitesmoke;
+    }
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home-Webmaster.aspx.cs" Inherits="La_Panneteria.WebForm2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home-Webmaster.aspx.cs" Inherits="La_Panneteria.WebForm2" EnableEventValidation="false" %>
 <% 
     if (Request.Cookies["SessionToken"] != null)
     {
@@ -98,7 +98,7 @@
         </header>
         <logout>
                 <ul class="logout">
-                  <li><a href="#logout" onclick="CerrarSesion()"><p>Cerrar Sesi&oacute;n</p></a></li>
+                 <li><a runat="server" onserverclick="CerrarSesion" name="logout" id="logout"><p>Cerrar Sesi&oacute;n</p></a></li>
                 </ul>
         </logout>
         <titulo>
@@ -184,7 +184,7 @@
               <td colspan="5"><asp:Button runat='server' onClick='iniciarBackup' name="BotonBackup" id="BotonBackup" Text="Descargar Backup" AutoPostBack="True"></asp:Button></td>
         </tr>
         <tr class="fila_usuarios">
-              <td colspan="4" align="center"><button name="BotonCerrar" id="BotonCerrar" onclick='document.getElementById("myModal").style.display="none"'>Cerrar</button>&nbsp;&nbsp;
+              <td colspan="6" align="center"><button name="BotonCerrar" id="BotonCerrar" onclick='document.getElementById("myModal").style.display="none"'>Cerrar</button>&nbsp;&nbsp;
               </td >
         </tr >
    </table > 
