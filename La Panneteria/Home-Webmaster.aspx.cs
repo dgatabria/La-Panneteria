@@ -1,4 +1,5 @@
-﻿using Security;
+﻿using BusinessEntities;
+using Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,12 +26,142 @@ namespace La_Panneteria
             DatabaseManager dbm = new DatabaseManager();
             dbm.Backup(fullpath);
 
-            
+            Response.Clear();
             Response.ContentType = "application/octet-stream";
-            Response.AddHeader("Content-Disposition",
-               string.Format("attachment; filename={0}", fileName));
+
+            Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
             Response.TransmitFile(fullpath);
             Response.End();
+        }
+
+        protected void TraerLogsAntes(object sender, EventArgs args)
+        {
+            int pi;
+            try
+            {
+                pi = Convert.ToInt32(contador_pagina.Value);
+                if (pi == 0)
+                {
+                    BotonAntes.Enabled = false;
+                    return;
+                }
+                pi--;
+                contador_pagina.Value = pi.ToString();
+                TraerLogs(sender, args);
+                BotonDespues.Enabled = true;
+                return;
+            }
+            catch
+            {
+                pi = 0;
+                contador_pagina.Value = pi.ToString();
+                TraerLogs(sender, args);
+                BotonAntes.Enabled = false;
+                return;
+            }
+        }
+
+        protected void TraerLogsDespues(object sender, EventArgs args)
+        {
+            int pi;
+            try
+            {
+                pi = Convert.ToInt32(contador_pagina.Value);
+                pi++;
+                contador_pagina.Value = pi.ToString();
+                TraerLogs(sender, args);
+                return;
+            }
+            catch
+            {
+                pi = 1;
+                contador_pagina.Value = pi.ToString();
+                TraerLogs(sender, args);
+                return;
+            }
+        }
+
+        protected void TraerLogs(object sender, EventArgs args)
+        {
+            int pi;
+            try
+            {
+                pi = Convert.ToInt32(contador_pagina.Value);
+            } catch
+            {
+                pi = 1;
+            }
+
+            string crits = "";
+            int e = 0;
+            if (Crit_Urgente.Checked)
+            {
+                crits = "1,";
+                e = 1;
+            }
+            if (Crit_Error.Checked)
+            {
+                if (e > 0)
+                {
+                    crits += ",";
+                }
+                crits += "2";
+                e = 1;
+            }
+            if (Crit_Advertencia.Checked)
+            {
+                if (e > 0)
+                {
+                    crits += ",";
+                }
+                crits += "3";
+                e = 1;
+            }
+            if (Crit_inf.Checked)
+            {
+                if (e > 0)
+                {
+                    crits += ",";
+                }
+                crits += "4";
+            }
+            LogManager lm = new LogManager();
+            DateTime fechaInicio;
+            if (! DateTime.TryParse(fechai.Text,out fechaInicio))
+            {
+                fechaInicio = DateTime.Today.AddDays(-1);
+            }
+            DateTime fechaFin;
+            if (! DateTime.TryParse(fechaf.Text, out fechaFin))
+            {
+                fechaFin = DateTime.Today;
+            }
+
+            int j = 0;
+            string tabla = "<table><tr><td>Hora</td><td>Criticidad</td><td>Modulo</td><td>Actor</td><td>Mensaje</td></tr>";
+            foreach (BEEventoBitacora evento in lm.ListarEventos(logs_actor.Text, fechaInicio, fechaFin, crits, pi))
+            {
+                tabla += "<tr><td>" + evento.Fecha.ToString() + "</td><td>" + evento.Criticidad + "</td><td>" + evento.Modulo + "</td><td>" + evento.Actor + "</td><td>" + evento.Mensaje + "</td></tr>";
+                j++;
+            }
+            tabla += "</table>";
+
+            contenedor_tabla_eventos.InnerHtml = tabla;
+            if (pi == 0)
+            {
+                BotonAntes.Enabled = false;
+            } else
+            {
+                BotonAntes.Enabled = true;
+            }
+            if (j < 10)
+            {
+                BotonDespues.Enabled = false;
+            } else
+            {
+                BotonDespues.Enabled = true;
+            }
+
         }
         protected void iniciarRestore(object sender, EventArgs args)
         {

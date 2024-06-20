@@ -139,5 +139,43 @@ namespace BLL
 
             return tmplista;
         }
+        public List<BEEventoBitacora> ListarEventos(string actor, DateTime fechai, DateTime fechaf, string criticidad, int pagina)
+        {
+            List<BEEventoBitacora> tmplista = new List<BEEventoBitacora>();
+
+            DataTable tablas;
+            string Query = "ListarEventosBitacoraENC";
+
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+            ht.Add("@Usuario", actor);
+            ht.Add("@FECHAI", fechai.ToString("yyyy-MM-dd"));
+            ht.Add("@FECHAF", fechaf.ToString("yyyy-MM-dd"));
+            ht.Add("@CRITICIDAD", criticidad);
+            ht.Add("@PAGINA", pagina);
+            tablas = bd.LeerSP(Query, ht);
+
+            BEEventoBitacora tmpentrada; ;
+            int i = 1;
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+
+                    tmpentrada = new BEEventoBitacora();
+                    tmpentrada.Codigo = i;
+                    tmpentrada.Fecha = Convert.ToDateTime(fila["HORA"]);
+                    tmpentrada.Actor = fila["ACTOR"].ToString();
+                    tmpentrada.Mensaje = fila["MENSAJE"].ToString();
+                    tmpentrada.Modulo = fila["MODULO"].ToString();
+                    tmpentrada.Criticidad = fila["CRITICIDAD"].ToString();
+
+                    tmplista.Add(tmpentrada);
+                    i++;
+                }
+            }
+
+            return tmplista;
+        }
     }
 }

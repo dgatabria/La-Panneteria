@@ -192,6 +192,7 @@
     <Content Include="Images\WebMaster\Backup.jpg" />
     <Content Include="CSS\login.css" />
     <Content Include="Images\WebMaster\DV.jpg" />
+    <Content Include="Images\WebMaster\logs.jpg" />
     <Content Include="MantenimientoDV.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

@@ -16,7 +16,10 @@ namespace Security
         {
             return bllb.ListarEventos(actor, fechai, fechaf, criticidad);
         }
-
+        public List<BEEventoBitacora> ListarEventos(string actor, DateTime fechai, DateTime fechaf, string criticidad, int pagina)
+        {
+            return bllb.ListarEventos(actor, fechai, fechaf, criticidad, pagina);
+        }
         public List<BEEventoBitacoraCambios> ListarCambiosProductos(BEUsuario Actor, DateTime fechai, DateTime fechaf)
         {
             return bllb.ListarCambiosProductos(Actor, fechai, fechaf);
