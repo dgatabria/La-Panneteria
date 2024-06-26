@@ -29,7 +29,7 @@ namespace La_Panneteria
             usuario.Password = Request.Form["password"];
             try
             {
-                SessionManager.Login(usuario);
+                SessionManager.Login(usuario,Session.SessionID);
             }
             catch (Exception ex)
             {
@@ -66,8 +66,13 @@ namespace La_Panneteria
             }
             HttpCookie cookie = new HttpCookie("SessionToken");
             cookie.Secure = true;
-            cookie.Value = SessionManager.GetInstance.GetSessionToken();
+            //cookie.Value = SessionManager.GetInstance.GetSessionToken();
+            cookie.Value = Session.SessionID;
+            //Session.SessionID = SessionManager.GetInstance.GetSessionToken();
             Response.Cookies.Add(cookie);
+            
+
+
             switch (SessionManager.GetInstance.Usuario.Perfil.Nombre)
             {
                 case "CLIENTE":
@@ -92,7 +97,7 @@ namespace La_Panneteria
             usuario.Password = Request.Form["password"];
             try
             {
-                SessionManager.Login(usuario);
+                SessionManager.Login(usuario,Session.SessionID);
             }
             catch (Exception ex)
             {

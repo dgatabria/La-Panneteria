@@ -103,7 +103,7 @@ namespace Security
             throw new Exception(GetInstance.Traductor.IdiomaSeleccionado.Palabras["msgerror_sessionmgr_permisodenegado"].ToString());
 
         }
-        public static void Login(BEUsuario usuario)
+        public static void Login(BEUsuario usuario,string sessionid)
         {
             //           if (_session == null)
             //            {
@@ -128,7 +128,7 @@ namespace Security
                 BLLogin checkLogin = new BLLogin();
                 try
                 {
-                    string i = checkLogin.ValidarUsuario(tmpusuario);
+                    string i = checkLogin.ValidarUsuario(tmpusuario,sessionid);
 
                     if (i != "")
                     {
