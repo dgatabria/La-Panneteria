@@ -4,21 +4,29 @@
     {
         HttpCookie SessionCookie = Request.Cookies["SessionToken"];
         //Response.Write("Testeando cookie de sesion: " + SessionCookie.Value.ToString());
-        if (! Security.SessionManager.VerificarToken(SessionCookie.Value.ToString()))
+        if (SessionCookie.Value.ToString()  != Session.SessionID.ToString())
         {
             Response.Redirect("/Default");
         } else
+        {
+            if (Security.SessionManager.GetInstance != null)
+            {
+
+
+                switch (Security.SessionManager.GetInstance.Usuario.Perfil.Nombre)
                 {
-                    switch (Security.SessionManager.GetInstance.Usuario.Perfil.Nombre)
-                     {
-                         case "CLIENTE":
-                         Response.Redirect("/Main");
-                      break;
-                        case "WEBMASTER":
-                         Response.Redirect("/Home-WebMaster");
+                    case "CLIENTE":
+                        Response.Redirect("/Main");
                         break;
-                    }
+                    case "WEBMASTER":
+                        Response.Redirect("/Home-WebMaster");
+                        break;
                 }
+            } else
+                    {
+                Response.Redirect("/Default");
+                    }
+        }
     } else {
         Response.Redirect("/Default");
     }

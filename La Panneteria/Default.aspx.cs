@@ -42,10 +42,12 @@ namespace La_Panneteria
                     //Server.Transfer("/MantenimientoDV",true);
                     try
                     {
-                        SessionManager.WebMasterLogin(usuario);
+                        
+                        
+                        SessionManager.WebMasterLogin(usuario, Session.SessionID);
                         HttpCookie cookie2 = new HttpCookie("SessionToken");
                         cookie2.Secure = true;
-                        cookie2.Value = SessionManager.GetInstance.GetSessionToken();
+                        cookie2.Value = Session.SessionID;
                         Response.Cookies.Add(cookie2);
                     } catch (Exception ex2) {
                         Response.Write("<script>alert(\"La base está dañada y no funciona la cuenta de webmaster. Excepcion:" + ex2.Message +" Se recomienda restaurar la base.\")</script>");

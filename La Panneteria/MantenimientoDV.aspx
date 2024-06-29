@@ -4,16 +4,22 @@
     {
         HttpCookie SessionCookie = Request.Cookies["SessionToken"];
         //Response.Write("Testeando cookie de sesion: " + SessionCookie.Value.ToString());
-        if (! Security.SessionManager.VerificarToken(SessionCookie.Value.ToString()))
+        if (SessionCookie.Value.ToString()  != Session.SessionID.ToString() )
         {
             Response.Redirect("/Default");
         } else
         {
             //Response.Write("<script>alert(\"" + Security.SessionManager.GetInstance.Usuario.Perfil.Nombre + "\")</script>");
-            if (Security.SessionManager.GetInstance.Usuario.Perfil.Nombre != "WEBMASTER")
+            if (Security.SessionManager.GetInstance != null)
             {
+                if (Security.SessionManager.GetInstance.Usuario.Perfil.Nombre != "WEBMASTER")
+                {
+                    Response.Redirect("/Default");
+                }
+            } else
+                    {
                 Response.Redirect("/Default");
-            }
+                    }
         }
     } else {
         Response.Redirect("/Default");
@@ -101,23 +107,32 @@
    
         </titulo>
         <mensaje>
-    <div style="width:100%;background-color:whitesmoke;align-content:center;text-align:center;">
+                            <div align="center">
     <%   
-        // no llego a la bll desde aca. PAsar por SecurityLayer.
+        
         Security.DatabaseManager dbm = new Security.DatabaseManager();
         System.Data.DataTable dt;
         dt = dbm.CalculaDV();
         //DB.
-        int rc = Convert.ToInt32(dt.Rows[0]["ERROR_CODE"]);
-        int failed_h = Convert.ToInt32(dt.Rows[0]["FAILED_H"]);
-        int failed_v = Convert.ToInt32(dt.Rows[0]["FAILED_V"]);
-        string table_name = Convert.ToString(dt.Rows[0]["TABLE_NAME"]);
-        string message = Convert.ToString(dt.Rows[0]["MESSAGE"]);
+        string mensaje = "<div style=\"justify-content: center;width:100%;background-color:whitesmoke;align-content:center;text-align:center;\"><table align='center' class='tabla_logs'><tr><th>Codigo</th><th>Mensaje</th></tr>";
+        if (dt.Rows.Count > 0 )
+        {
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                mensaje += "<tr><td>" + row["ID"].ToString()+ "</td><td>" + row["Mensaje"].ToString() + "</td></tr>" ;
+            }
+            mensaje += "</table></div><br />";
+            Response.Write(mensaje);
+        }
 
-        Response.Write(message);
+        
         %>
        </div>  
+
+
         </mensaje>
+
+
     <!-- The Modal -->
     <form runat="server"> 
         <div id="myModal" class="modal">
@@ -166,6 +181,12 @@
    </table > 
 </div>
         <div class="menu" id="menu_container">
+
+
+
+
+
+
                         <div align="center" class="menuitem" onclick="mostrar_modal_restore()"><br /><img src="/Images/WebMaster/Backup.jpg" alt="Backup y Restore" width="95%">
                         <p id="texto_backup"><b>Restaurar la Base de Datos</b></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_dv()"><br /><img src="/Images/WebMaster/DV.jpg" alt="Digito Verificador" width="95%">

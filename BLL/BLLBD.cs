@@ -44,7 +44,7 @@ namespace BLL
         {
             Hashtable tmp = new Hashtable();
 
-            string Query = "ActualizaDV";
+            string Query = "ActualizaDV2";
             bd = new Acceso();
             Hashtable ht = new Hashtable();
 
@@ -55,7 +55,7 @@ namespace BLL
         {
             Hashtable tmp = new Hashtable();
 
-            string Query = "VerificaDV";
+            string Query = "VerificaDV2";
             bd = new Acceso();
             Hashtable ht = new Hashtable();
             return bd.LeerSP(Query, ht);

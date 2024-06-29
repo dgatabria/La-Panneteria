@@ -59,7 +59,7 @@ namespace Security
         {
             get
             {
-                if (_session == null) throw new Exception("Sesion no iniciada");
+                //if (_session == null) throw new Exception("Sesion no iniciada");
                 return _session;
             }
 
@@ -157,7 +157,7 @@ namespace Security
             //            }
 
         }
-        public static void WebMasterLogin(BEUsuario usuario)
+        public static void WebMasterLogin(BEUsuario usuario, string sessiontoken)
         {
 
             Regex re = new Regex("^[a-zA-Z@\\.]+$");
@@ -180,7 +180,7 @@ namespace Security
             BLLogin checkLogin = new BLLogin();
             try
             {
-                string i = checkLogin.ValidarWebMaster(tmpusuario);
+                string i = checkLogin.ValidarWebMaster(tmpusuario, sessiontoken);
 
                 if (i != "")
                 {

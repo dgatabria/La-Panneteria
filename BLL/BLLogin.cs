@@ -15,7 +15,7 @@ namespace BLL
     {
         Acceso bd;
 
-        public string ValidarWebMaster(BEUsuario usuario)
+        public string ValidarWebMaster(BEUsuario usuario, string sessiontoken)
         {
             bd = new Acceso();
             string Query = "doLogin";
@@ -31,8 +31,8 @@ namespace BLL
             spc[1].Direction = System.Data.ParameterDirection.Input;
             spc.Add(new SqlParameter("@RetValue", SqlDbType.Int));
             spc[2].Direction = System.Data.ParameterDirection.Output;
-            spc.Add(new SqlParameter("@SESSIONTOKEN", SqlDbType.NVarChar));
-            spc[3].Direction = System.Data.ParameterDirection.Output;
+            spc.Add(new SqlParameter("@SESSIONTOKEN", sessiontoken));
+            spc[3].Direction = System.Data.ParameterDirection.Input;
             spc[3].Size = 100;
             SqlParameterCollection ipc = bd.LeerSPRTO(Query, spc);
 
