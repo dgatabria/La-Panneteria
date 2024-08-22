@@ -224,6 +224,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Main.aspx" />
     <Content Include="Home-Webmaster.aspx" />
+    <Content Include="FooterWebService.asmx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -336,6 +337,10 @@
     </Compile>
     <Compile Include="Home-Webmaster.aspx.designer.cs">
       <DependentUpon>Home-Webmaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FooterWebService.asmx.cs">
+      <DependentUpon>FooterWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
