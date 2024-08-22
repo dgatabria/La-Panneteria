@@ -394,18 +394,13 @@
         
         <footer>
             <br />
-            <p><b>Direccion:
-                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                </b></p>
-            <p><b>Teléfono:
-                <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-                </b></p>
-            <p><b>Mail:
-                <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
-                </b></p>
-            <p><b>Instragram:
-                <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-                </b></p>          
+            <p><b>Direccion:</b> <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></p>
+                
+            <p><b>Teléfono:</b> <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label></p>
+                
+            <p><b>Mail:</b> <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></p>
+                
+            <p><b>Instragram:</b> <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></p>
         </footer>
       </div>
         </form>
