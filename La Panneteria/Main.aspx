@@ -357,7 +357,6 @@
     <form runat="server"> 
 
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        </form>
     <div class="grid">
         <header>
             
@@ -395,13 +394,17 @@
         
         <footer>
             <br />
-            <p><b>Direccion:</b> Alberdi 534, CABA, Buenos Aires</p>
-            <p><b>Teléfono:</b> 4635-3753</p>
-            <p><b>Mail:</b> consultas@panneteria.com</p>
-            <p><b>Instragram:</b> @Panneteria</p>          
+            <p><b>Direccion:</b> <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></p>
+                
+            <p><b>Teléfono:</b> <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label></p>
+                
+            <p><b>Mail:</b> <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></p>
+                
+            <p><b>Instragram:</b> <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></p>
         </footer>
       </div>
-</body>
+        </form>
+    </body>
     <script>
         ListarTodo();
         ActualizarPedido();

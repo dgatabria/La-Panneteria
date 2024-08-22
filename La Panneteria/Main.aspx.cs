@@ -21,7 +21,13 @@ namespace La_Panneteria
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            FooterWebService WebService = new FooterWebService();
+            Footer footer = WebService.GetFooter();
 
+            Label1.Text = footer.Direccion;
+            Label2.Text = footer.Telefono;
+            Label3.Text = footer.Mail;
+            Label4.Text = footer.Instagram;
         }
     }
 }
