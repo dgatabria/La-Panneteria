@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Xml;
+using System.Xml.Linq;
 
 namespace La_Panneteria
 {
@@ -206,5 +208,44 @@ namespace La_Panneteria
             SessionManager.Logout();
             Response.Redirect("/Default");
         }
+        protected void actualizarListaPrecios(object sender, EventArgs args)
+        {
+          
+        }
+
+        protected void descargarListaPrecios(object sender, EventArgs args)
+        {
+
+            string strFolder = @"C:\tmp\";
+            string fileName = "listaPrecios-" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xml";
+            string fullpath = strFolder + fileName;
+
+            ProductManager Manager = new ProductManager();
+
+            List<BEArticulo> Articulos = Manager.ListarArticulos();
+
+            new XDocument(new XElement("Productos", "")).Save(fullpath);
+
+            XDocument xmlDoc = XDocument.Load(fullpath);
+
+            foreach(BEArticulo Articulo in Articulos)
+            {
+                xmlDoc.Element("Productos").Add(new XElement("Producto",
+                                                        new XElement("id", Articulo.Codigo.ToString()),
+                                                        new XElement("nombre", Articulo.Descripcion),
+                                                        new XElement("precio", Articulo.PrecioUnitario.ToString())));
+            }
+            
+            xmlDoc.Save(fullpath);
+
+            Response.Clear();
+            Response.ContentType = "application/octet-stream";
+
+            Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
+            Response.TransmitFile(fullpath);
+            Response.End();
+        }
+
     }
+
 }
