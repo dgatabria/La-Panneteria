@@ -147,5 +147,13 @@ namespace BLL
             bd.LeerSPRT(Query, ht);
             return true;
         }
+
+        public void ActualizarPrecioArticulos(BEUsuario Autor, List<BEArticulo> Articulos)
+        {
+            foreach(BEArticulo Art in Articulos)
+            {
+                Guardar(Autor, Art);
+            }
+        }
     }
 }

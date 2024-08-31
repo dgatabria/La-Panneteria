@@ -168,13 +168,13 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Button BotonBackup;
 
         /// <summary>
-        /// Control File1.
+        /// Control uploadFileXml.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputFile File1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputFile uploadFileXml;
 
         /// <summary>
         /// Control Button1.

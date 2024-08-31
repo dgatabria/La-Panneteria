@@ -20,6 +20,10 @@ namespace Security
             return bla.ListarStock();
         }
 
+        public void ActualizarPrecioArticulos(List<BEArticulo> Articulos)
+        {
+            bla.ActualizarPrecioArticulos(SessionManager.GetInstance.Usuario, Articulos);
+        }
         public List<BEStockArticulo> ListarArticulosPendientes()
         {
             return bla.ListarArticulosPendientes();

@@ -226,7 +226,7 @@
         </tr> 
         <tr>
               <td>&nbsp;Importar&nbsp;</td>
-              <td colspan="4"><input id="File1" runat="server" name="uploadFile" type="file" accept=".xml" /></td>
+              <td colspan="4"><input id="uploadFileXml" runat="server" name="uploadFileXml" type="file" accept=".xml" /></td>
               <td><asp:Button runat='server' onClick='actualizarListaPrecios' name="BotonRestore" id="Button1" Text="Actualizar Precios" AutoPostBack="True"></asp:Button></td>
         </tr>
         <tr>

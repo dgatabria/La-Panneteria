@@ -210,12 +210,53 @@ namespace La_Panneteria
         }
         protected void actualizarListaPrecios(object sender, EventArgs args)
         {
-          
+            string strFileName;
+            string strFilePath;
+            string strFolder;
+            strFolder = @"C:\tmp\";
+            // Retrieve the name of the file that is posted.
+            strFileName = uploadFileXml.PostedFile.FileName;
+            strFileName = Path.GetFileName(strFileName);
+            if (uploadFileXml.Value != "")
+            {
+                if (!Directory.Exists(strFolder))
+                {
+                    Directory.CreateDirectory(strFolder);
+                }
+
+                strFilePath = strFolder + strFileName;
+
+                try
+                {
+                    uploadFileXml.PostedFile.SaveAs(strFilePath);
+                    var consulta =
+                    from articulo in XElement.Load(strFilePath).Elements("Producto")
+                    select new BEArticulo
+                    {
+                        Codigo = Convert.ToInt32(Convert.ToString(articulo.Element("id").Value).Trim()),
+                        Descripcion = Convert.ToString(articulo.Element("nombre").Value).Trim(),
+                        PrecioUnitario = Convert.ToDouble((articulo.Element("precio").Value.Trim()))
+                    };
+
+                    List<BEArticulo> Articulos = consulta.ToList<BEArticulo>();
+
+                    ProductManager Manager = new ProductManager();
+
+                    Manager.ActualizarPrecioArticulos(Articulos);
+
+                    Response.Write("<script> alert(\"La lista de precios fue actualizada\")  </script>");
+
+                }
+                catch (Exception ex)
+                {
+                }
+
+
+            }
         }
 
         protected void descargarListaPrecios(object sender, EventArgs args)
         {
-
             string strFolder = @"C:\tmp\";
             string fileName = "listaPrecios-" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xml";
             string fullpath = strFolder + fileName;
