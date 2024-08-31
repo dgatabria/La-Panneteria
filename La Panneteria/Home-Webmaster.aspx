@@ -50,10 +50,13 @@
         // Get the modal
         var modal1 = document.getElementById("ModalBackup");
         var modal2 = document.getElementById("ModalLogs");
+        var modal3 = document.getElementById("ModalXml");
+
 
         // Get the <span> element that closes the modal
         var span1 = document.getElementsByClassName("close")[0];
         var span2 = document.getElementsByClassName("close")[1];
+        var span3 = document.getElementsByClassName("close")[3];
         //var span = document.getElementsByClassName("close")[0];
         //var modal_contenido_login = '<span class="close" id="close_btn">&times;</span>';
         //modal_contenido_login += '<table class="tabla_usuarios"><tr class="fila_usuarios"><th class="header_usuarios">Nombre de Usuario</th><th class="header_usuarios">Nombre</th><th class="header_usuarios">Apellido</th><th class="header_usuarios">Rol</th><th class="header_usuarios">Estado</th></tr><tr class="fila_usuarios"><td>admin@lp.com</td><td>Damian</td><td>Gatabria</td><td>Administrador</td><td>Activo</td></tr><tr class="fila_usuarios"><td>webmaster@lp.com</td><td>Eduardo</td><td>Alvarez</td><td>WebMaster</td><td>Activo</td></tr><tr class="fila_usuarios"><td>cliente@lp.com</td><td>Gabriel</td><td>Bernardini</td><td>Cliente</td><td>Activo</td></tr></table>';
@@ -69,11 +72,19 @@
             document.getElementById("ModalLogs").style.display = "block";
            
         }
+
+        function mostrar_modal_xml() {
+
+            document.getElementById("ModalXml").style.display = "block";
+
+        }
         // When the user clicks anywhere outside of the modal, close it
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             var modal1 = document.getElementById("ModalBackup");
             var modal2 = document.getElementById("ModalLogs");
+            var modal3 = document.getElementById("ModalXml");
+
             if (event.target == modal1) {
                 modal1.style.display = "none";
             }
@@ -117,6 +128,8 @@
                         <p id="texto_backup"><b>Backup y Restore</b></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_logs()"><br /><img src="/Images/WebMaster/logs.jpg" alt="Bitácora del sistema" width="95%">
                         <p id="texto_logs"><b>Bit&aacute;cora del sistema</b></p></div>
+                        <div align="center" class="menuitem" onclick="mostrar_modal_xml()"><br /><img src="/Images/WebMaster/lista.png" alt="XML" width="95%">
+                        <p id="texto_logs"><b>Lista de precios</b></p></div>
         </div> 
 <form runat="server"> 
     <!-- The Modal -->
@@ -200,6 +213,35 @@
 </div>
 
 
+<div id="ModalXml" class="modal">
+    
+   
+        <ContentTemplate>
+  <!-- Modal content -->
+  <div class="modal-content" style="justify-content:center" id="modal-content-xml">
+        <span class="close" id="close_btn2" onclick="document.getElementById('ModalXml').style.display='none'">&times;</span>
+   <table class="tabla_usuarios">
+        <tr class="fila_usuarios">
+              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Administración de productos&nbsp;&nbsp;</b></th>
+        </tr> 
+        <tr>
+              <td>&nbsp;Importar&nbsp;</td>
+              <td colspan="4"><input id="uploadFileXml" runat="server" name="uploadFileXml" type="file" accept=".xml" /></td>
+              <td><asp:Button runat='server' onClick='actualizarListaPrecios' name="BotonRestore" id="Button1" Text="Actualizar Precios" AutoPostBack="True"></asp:Button></td>
+        </tr>
+        <tr>
+              <td>&nbsp;Exportar&nbsp;</td>
+              <td colspan="5"><asp:Button runat='server' onClick='descargarListaPrecios' name="BotonBackup" id="Button2" Text="Exportar lista de precios" AutoPostBack="True"></asp:Button></td>
+        </tr>
+        <tr class="fila_usuarios">
+              <td colspan="6" align="center"><button name="BotonCerrar" id="BotonCerrar" onclick='document.getElementById("myModal").style.display="none"'>Cerrar</button>&nbsp;&nbsp;
+              </td >
+        </tr >
+   </table > 
+  </div>
+        </ContentTemplate>
+      
+</div>
 </form>        
        
         <footer>
