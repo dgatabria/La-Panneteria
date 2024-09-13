@@ -265,26 +265,38 @@ namespace La_Panneteria
 
             List<BEArticulo> Articulos = Manager.ListarArticulos();
 
-            new XDocument(new XElement("Productos", "")).Save(fullpath);
-
-            XDocument xmlDoc = XDocument.Load(fullpath);
-
-            foreach(BEArticulo Articulo in Articulos)
+            if (!Directory.Exists(strFolder))
             {
-                xmlDoc.Element("Productos").Add(new XElement("Producto",
-                                                        new XElement("id", Articulo.Codigo.ToString()),
-                                                        new XElement("nombre", Articulo.Descripcion),
-                                                        new XElement("precio", Articulo.PrecioUnitario.ToString())));
+                Directory.CreateDirectory(strFolder);
+            }
+
+            try
+            {
+                new XDocument(new XElement("Productos", "")).Save(fullpath);
+
+                XDocument xmlDoc = XDocument.Load(fullpath);
+
+                foreach (BEArticulo Articulo in Articulos)
+                {
+                    xmlDoc.Element("Productos").Add(new XElement("Producto",
+                                                            new XElement("id", Articulo.Codigo.ToString()),
+                                                            new XElement("nombre", Articulo.Descripcion),
+                                                            new XElement("precio", Articulo.PrecioUnitario.ToString())));
+                }
+
+                xmlDoc.Save(fullpath);
+
+                Response.Clear();
+                Response.ContentType = "application/octet-stream";
+
+                Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
+                Response.TransmitFile(fullpath);
+                Response.End();
+            } catch(Exception e)
+            {
+
             }
             
-            xmlDoc.Save(fullpath);
-
-            Response.Clear();
-            Response.ContentType = "application/octet-stream";
-
-            Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
-            Response.TransmitFile(fullpath);
-            Response.End();
         }
 
     }
