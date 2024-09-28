@@ -87,8 +87,8 @@
             document.getElementById("ModalProductos").style.display = "block";
 
         }
-
-        // When the user clicks anywhere outside of the modal, close it
+        
+               // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             var modal1 = document.getElementById("ModalBackup");
             var modal2 = document.getElementById("ModalLogs");
@@ -115,11 +115,32 @@
 
         }
 
+        function ValidarProducto() {
+
+	    var nombre = document.getElementById("txtNombreProducto").value;
+	    var precio = parseFloat(document.getElementById("txtPrecioProducto").value);
+	    var categoria = document.getElementById("ddlCategoria").value;
+
+	    if (nombre === "") {
+		    alert("Debe elegir un nombre valido");
+		    return false;
+	    }
+
+	    if (isNaN(precio) || precio <= 0) {
+		    alert("Debe elegir un precio valida");
+		    return false;
+	    }
+
+	    if (categoria === "") {
+		    alert("Debe elegir una categoria valida");
+		    return false;
+	    }
+	    return true;
+    }
+
     </script>
 
-
-
-
+       
     <div class="grid">
         <header>
             
@@ -289,12 +310,9 @@
     <tr>
         <td>&nbsp;Imagen&nbsp;</td>
         <td colspan="4">
-            <input id="fileImagenProducto" runat="server" type="file" accept="image/*" style="width:100%;" onchange="document.getElementById('lblRutaImagen').textContent = this.value" />
+            <input id="fileImagenProducto" runat="server" type="file" accept="image/*" style="width:100%;" />
         </td>
-        <td>
-            <label id="lblRutaImagen" runat="server" style="font-size:12px;"></label>
-        </td>
-    </tr>
+            </tr>
 
     <tr>
         <td>&nbsp;Categoría&nbsp;</td>
@@ -310,7 +328,7 @@
 
     <tr>
         <td colspan="6" align="center">
-            <asp:Button runat='server' name="btnGuardarProducto" id="btnGuardarProducto" Text="Guardar Producto" AutoPostBack="True"/>
+        <asp:Button ID="btnGuardarProducto" runat="server" Text="Guardar Producto" OnClientClick="return ValidarProducto()" OnClick="GuardarProducto" />
         </td>
     </tr>
 </table>

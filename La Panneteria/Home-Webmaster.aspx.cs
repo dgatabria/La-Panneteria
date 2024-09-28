@@ -89,7 +89,8 @@ namespace La_Panneteria
             try
             {
                 pi = Convert.ToInt32(contador_pagina.Value);
-            } catch
+            }
+            catch
             {
                 pi = 1;
             }
@@ -129,12 +130,12 @@ namespace La_Panneteria
             }
             LogManager lm = new LogManager();
             DateTime fechaInicio;
-            if (! DateTime.TryParse(fechai.Text,out fechaInicio))
+            if (!DateTime.TryParse(fechai.Text, out fechaInicio))
             {
                 fechaInicio = DateTime.Today.AddDays(-1);
             }
             DateTime fechaFin;
-            if (! DateTime.TryParse(fechaf.Text, out fechaFin))
+            if (!DateTime.TryParse(fechaf.Text, out fechaFin))
             {
                 fechaFin = DateTime.Today;
             }
@@ -152,14 +153,16 @@ namespace La_Panneteria
             if (pi == 0)
             {
                 BotonAntes.Enabled = false;
-            } else
+            }
+            else
             {
                 BotonAntes.Enabled = true;
             }
             if (j < 10)
             {
                 BotonDespues.Enabled = false;
-            } else
+            }
+            else
             {
                 BotonDespues.Enabled = true;
             }
@@ -198,7 +201,7 @@ namespace La_Panneteria
 
             }
 
-            }
+        }
         protected void CerrarSesion(object sender, EventArgs args)
         {
             HttpCookie cookie2 = new HttpCookie("SessionToken");
@@ -292,13 +295,22 @@ namespace La_Panneteria
                 Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
                 Response.TransmitFile(fullpath);
                 Response.End();
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
 
             }
-            
+
         }
 
-    }
+        protected void GuardarProducto(object sender, EventArgs args)
+        {
+            string Nombre = txtNombreProducto.Value;
+            double precio = Convert.ToDouble(txtPrecioProducto.Value);
+            string imagen = fileImagenProducto.Value;
+            int categoria = Convert.ToInt16(ddlCategoria.Value);
 
+            var a = 1;
+        }
+    }
 }
