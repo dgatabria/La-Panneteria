@@ -272,7 +272,7 @@ namespace La_Panneteria
             {
                 Directory.CreateDirectory(strFolder);
             }
-
+            
             try
             {
                 new XDocument(new XElement("Productos", "")).Save(fullpath);
@@ -300,7 +300,6 @@ namespace La_Panneteria
             {
 
             }
-
         }
 
         protected void GuardarProducto(object sender, EventArgs args)

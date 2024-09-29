@@ -87,8 +87,7 @@
             document.getElementById("ModalProductos").style.display = "block";
 
         }
-        
-               // When the user clicks anywhere outside of the modal, close it
+
         window.onclick = function (event) {
             var modal1 = document.getElementById("ModalBackup");
             var modal2 = document.getElementById("ModalLogs");
@@ -284,6 +283,7 @@
     
    
     <ContentTemplate>
+
 <div class="modal-content" style="justify-content:center" id="modal-content-productos">
     <span class="close" id="close_btn2" onclick="document.getElementById('ModalProductos').style.display='none'">&times;</span>
 <table class="tabla_usuarios">
@@ -332,6 +332,7 @@
         </td>
     </tr>
 </table>
+
 </div>
     </ContentTemplate>
       

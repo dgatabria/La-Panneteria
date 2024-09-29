@@ -195,7 +195,7 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Button Button2;
 
         /// <summary>
-        /// Control txtNombreProducto.
+
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -214,6 +214,7 @@ namespace La_Panneteria
 
         /// <summary>
         /// Control fileImagenProducto.
+
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -238,5 +239,6 @@ namespace La_Panneteria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardarProducto;
+
     }
 }
