@@ -8,7 +8,7 @@ using BLL;
 
 namespace Security
 {
-    internal class OrderManager
+    public class OrderManager
     {
         BLLArticulo blla = new BLLArticulo();
         BLLPedido blp = new BLLPedido();
