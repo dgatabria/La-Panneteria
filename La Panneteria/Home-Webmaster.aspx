@@ -310,7 +310,7 @@
     <tr>
         <td>&nbsp;Imagen&nbsp;</td>
         <td colspan="4">
-            <input id="fileImagenProducto" runat="server" type="file" accept="image/*" style="width:100%;" />
+            <asp:FileUpload ID="fileImagenProducto" runat="server" /> 
         </td>
             </tr>
 

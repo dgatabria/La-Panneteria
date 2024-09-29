@@ -305,12 +305,53 @@ namespace La_Panneteria
 
         protected void GuardarProducto(object sender, EventArgs args)
         {
-            string Nombre = txtNombreProducto.Value;
-            double precio = Convert.ToDouble(txtPrecioProducto.Value);
-            string imagen = fileImagenProducto.Value;
-            int categoria = Convert.ToInt16(ddlCategoria.Value);
+            if (fileImagenProducto.HasFile)
+            {
+                try
+                {
+                    string nombre = txtNombreProducto.Value;
+                    double precio = Convert.ToDouble(txtPrecioProducto.Value);
+                    int categoria = Convert.ToInt16(ddlCategoria.Value);
 
-            var a = 1;
+                    List<String> Categorias = new List<String>();
+                    Categorias.Add("Panes");
+                    Categorias.Add("Dulces");
+                    Categorias.Add("Salados");
+
+                    string nombreCategoria = Categorias[categoria - 1];
+
+                    string folderPath = Server.MapPath("~/Images/" + nombreCategoria + "/");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string filePath = folderPath + Path.GetFileName(fileImagenProducto.FileName);
+                    fileImagenProducto.SaveAs(filePath);
+
+                    
+                    string strFileName = "Images/" + nombreCategoria + "/" + fileImagenProducto.FileName;
+
+                    BEArticulo Articulo = new BEArticulo();
+                    Articulo.Descripcion = nombre;
+                    Articulo.PrecioUnitario = precio;
+                    Articulo.URL = strFileName;
+                    Articulo.Categoria = categoria.ToString();
+
+                    OrderManager orderManager = new OrderManager();
+                    orderManager.GuardarArticulo(Articulo);
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script> alert(\"Fallo al guardar el articulo\")  </script>");
+                }
+            }
+            else
+            {
+                Response.Write("<script> alert(\"Debe seleccionar una imagen\")  </script>");
+
+            }
         }
     }
 }
