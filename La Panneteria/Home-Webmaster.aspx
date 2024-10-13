@@ -51,12 +51,15 @@
         var modal1 = document.getElementById("ModalBackup");
         var modal2 = document.getElementById("ModalLogs");
         var modal3 = document.getElementById("ModalXml");
+        var modal4 = document.getElementById("ModalProductos");
 
 
         // Get the <span> element that closes the modal
         var span1 = document.getElementsByClassName("close")[0];
         var span2 = document.getElementsByClassName("close")[1];
-        var span3 = document.getElementsByClassName("close")[3];
+        var span3 = document.getElementsByClassName("close")[2];
+        var span4 = document.getElementsByClassName("close")[3];
+
         //var span = document.getElementsByClassName("close")[0];
         //var modal_contenido_login = '<span class="close" id="close_btn">&times;</span>';
         //modal_contenido_login += '<table class="tabla_usuarios"><tr class="fila_usuarios"><th class="header_usuarios">Nombre de Usuario</th><th class="header_usuarios">Nombre</th><th class="header_usuarios">Apellido</th><th class="header_usuarios">Rol</th><th class="header_usuarios">Estado</th></tr><tr class="fila_usuarios"><td>admin@lp.com</td><td>Damian</td><td>Gatabria</td><td>Administrador</td><td>Activo</td></tr><tr class="fila_usuarios"><td>webmaster@lp.com</td><td>Eduardo</td><td>Alvarez</td><td>WebMaster</td><td>Activo</td></tr><tr class="fila_usuarios"><td>cliente@lp.com</td><td>Gabriel</td><td>Bernardini</td><td>Cliente</td><td>Activo</td></tr></table>';
@@ -78,12 +81,18 @@
             document.getElementById("ModalXml").style.display = "block";
 
         }
-        // When the user clicks anywhere outside of the modal, close it
-        // When the user clicks anywhere outside of the modal, close it
+
+        function mostrar_modal_productos() {
+
+            document.getElementById("ModalProductos").style.display = "block";
+
+        }
+
         window.onclick = function (event) {
             var modal1 = document.getElementById("ModalBackup");
             var modal2 = document.getElementById("ModalLogs");
             var modal3 = document.getElementById("ModalXml");
+            var modal4 = document.getElementById("ModalProductos");
 
             if (event.target == modal1) {
                 modal1.style.display = "none";
@@ -91,7 +100,12 @@
             if (event.target == modal2) {
                 modal2.style.display = "none";
             }
-            
+            if (event.target == modal3) {
+                modal3.style.display = "none";
+            }
+            if (event.target == modal4) {
+                modal4.style.display = "none";
+            }
         }
         function CerrarSesion() {
 
@@ -100,12 +114,32 @@
 
         }
 
+        function ValidarProducto() {
+
+	    var nombre = document.getElementById("txtNombreProducto").value;
+	    var precio = parseFloat(document.getElementById("txtPrecioProducto").value);
+	    var categoria = document.getElementById("ddlCategoria").value;
+
+	    if (nombre === "") {
+		    alert("Debe elegir un nombre valido");
+		    return false;
+	    }
+
+	    if (isNaN(precio) || precio <= 0) {
+		    alert("Debe elegir un precio valida");
+		    return false;
+	    }
+
+	    if (categoria === "") {
+		    alert("Debe elegir una categoria valida");
+		    return false;
+	    }
+	    return true;
+    }
 
     </script>
 
-
-
-
+       
     <div class="grid">
         <header>
             
@@ -130,6 +164,8 @@
                         <p id="texto_logs"><b>Bit&aacute;cora del sistema</b></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_xml()"><br /><img src="/Images/WebMaster/lista.png" alt="XML" width="95%">
                         <p id="texto_logs"><b>Lista de precios</b></p></div>
+                        <div align="center" class="menuitem" onclick="mostrar_modal_productos()"><br /><img src="/Images/WebMaster/productos.jpg" alt="ABM Productos" width="95%">
+                        <p id="texto_logs"><b>ABM de Productos</b></p></div>
         </div> 
 <form runat="server"> 
     <!-- The Modal -->
@@ -222,7 +258,7 @@
         <span class="close" id="close_btn2" onclick="document.getElementById('ModalXml').style.display='none'">&times;</span>
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
-              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Administración de productos&nbsp;&nbsp;</b></th>
+              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Administración de Precios&nbsp;&nbsp;</b></th>
         </tr> 
         <tr>
               <td>&nbsp;Importar&nbsp;</td>
@@ -242,8 +278,67 @@
         </ContentTemplate>
       
 </div>
-</form>        
-       
+
+<div id="ModalProductos" class="modal">
+    
+   
+    <ContentTemplate>
+
+<div class="modal-content" style="justify-content:center" id="modal-content-productos">
+    <span class="close" id="close_btn2" onclick="document.getElementById('ModalProductos').style.display='none'">&times;</span>
+<table class="tabla_usuarios">
+    <tr class="fila_usuarios">
+        <th colspan="6" align="center" class="header_usuarios">
+            <b>&nbsp;&nbsp;Administración de productos&nbsp;&nbsp;</b>
+        </th>
+    </tr>
+
+    <tr>
+        <td>&nbsp;Nombre del Producto&nbsp;</td>
+        <td colspan="5">
+            <input id="txtNombreProducto" runat="server" type="text" placeholder="Ingrese el nombre del producto" style="width:100%;" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>&nbsp;Precio&nbsp;</td>
+        <td colspan="5">
+            <input id="txtPrecioProducto" runat="server" type="text" placeholder="Ingrese el precio" style="width:100%;" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>&nbsp;Imagen&nbsp;</td>
+        <td colspan="4">
+            <asp:FileUpload ID="fileImagenProducto" runat="server" /> 
+        </td>
+            </tr>
+
+    <tr>
+        <td>&nbsp;Categoría&nbsp;</td>
+        <td colspan="5">
+            <select id="ddlCategoria" runat="server" style="width:100%;">
+                <option value="">Seleccione una categoría</option>
+                <option value="1">Panes</option>
+                <option value="2">Dulces</option>
+                <option value="3">Salados</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="6" align="center">
+        <asp:Button ID="btnGuardarProducto" runat="server" Text="Guardar Producto" OnClientClick="return ValidarProducto()" OnClick="GuardarProducto" />
+        </td>
+    </tr>
+</table>
+
+</div>
+    </ContentTemplate>
+      
+</div>
+</form>  
+
         <footer>
             <br />
             <p><b>Direccion:</b> Alberdi 534, CABA, Buenos Aires</p>

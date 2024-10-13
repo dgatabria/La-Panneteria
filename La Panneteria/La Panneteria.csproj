@@ -194,6 +194,7 @@
     <Content Include="Images\WebMaster\DV.jpg" />
     <Content Include="Images\WebMaster\lista.png" />
     <Content Include="Images\WebMaster\logs.jpg" />
+    <Content Include="Images\WebMaster\productos.jpg" />
     <Content Include="MantenimientoDV.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

@@ -89,7 +89,8 @@ namespace La_Panneteria
             try
             {
                 pi = Convert.ToInt32(contador_pagina.Value);
-            } catch
+            }
+            catch
             {
                 pi = 1;
             }
@@ -129,12 +130,12 @@ namespace La_Panneteria
             }
             LogManager lm = new LogManager();
             DateTime fechaInicio;
-            if (! DateTime.TryParse(fechai.Text,out fechaInicio))
+            if (!DateTime.TryParse(fechai.Text, out fechaInicio))
             {
                 fechaInicio = DateTime.Today.AddDays(-1);
             }
             DateTime fechaFin;
-            if (! DateTime.TryParse(fechaf.Text, out fechaFin))
+            if (!DateTime.TryParse(fechaf.Text, out fechaFin))
             {
                 fechaFin = DateTime.Today;
             }
@@ -152,14 +153,16 @@ namespace La_Panneteria
             if (pi == 0)
             {
                 BotonAntes.Enabled = false;
-            } else
+            }
+            else
             {
                 BotonAntes.Enabled = true;
             }
             if (j < 10)
             {
                 BotonDespues.Enabled = false;
-            } else
+            }
+            else
             {
                 BotonDespues.Enabled = true;
             }
@@ -198,7 +201,7 @@ namespace La_Panneteria
 
             }
 
-            }
+        }
         protected void CerrarSesion(object sender, EventArgs args)
         {
             HttpCookie cookie2 = new HttpCookie("SessionToken");
@@ -265,28 +268,89 @@ namespace La_Panneteria
 
             List<BEArticulo> Articulos = Manager.ListarArticulos();
 
-            new XDocument(new XElement("Productos", "")).Save(fullpath);
-
-            XDocument xmlDoc = XDocument.Load(fullpath);
-
-            foreach(BEArticulo Articulo in Articulos)
+            if (!Directory.Exists(strFolder))
             {
-                xmlDoc.Element("Productos").Add(new XElement("Producto",
-                                                        new XElement("id", Articulo.Codigo.ToString()),
-                                                        new XElement("nombre", Articulo.Descripcion),
-                                                        new XElement("precio", Articulo.PrecioUnitario.ToString())));
+                Directory.CreateDirectory(strFolder);
             }
             
-            xmlDoc.Save(fullpath);
+            try
+            {
+                new XDocument(new XElement("Productos", "")).Save(fullpath);
 
-            Response.Clear();
-            Response.ContentType = "application/octet-stream";
+                XDocument xmlDoc = XDocument.Load(fullpath);
 
-            Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
-            Response.TransmitFile(fullpath);
-            Response.End();
+                foreach (BEArticulo Articulo in Articulos)
+                {
+                    xmlDoc.Element("Productos").Add(new XElement("Producto",
+                                                            new XElement("id", Articulo.Codigo.ToString()),
+                                                            new XElement("nombre", Articulo.Descripcion),
+                                                            new XElement("precio", Articulo.PrecioUnitario.ToString())));
+                }
+
+                xmlDoc.Save(fullpath);
+
+                Response.Clear();
+                Response.ContentType = "application/octet-stream";
+
+                Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
+                Response.TransmitFile(fullpath);
+                Response.End();
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
-    }
+        protected void GuardarProducto(object sender, EventArgs args)
+        {
+            if (fileImagenProducto.HasFile)
+            {
+                try
+                {
+                    string nombre = txtNombreProducto.Value;
+                    double precio = Convert.ToDouble(txtPrecioProducto.Value);
+                    int categoria = Convert.ToInt16(ddlCategoria.Value);
 
+                    List<String> Categorias = new List<String>();
+                    Categorias.Add("Panes");
+                    Categorias.Add("Dulces");
+                    Categorias.Add("Salados");
+
+                    string nombreCategoria = Categorias[categoria - 1];
+
+                    string folderPath = Server.MapPath("~/Images/" + nombreCategoria + "/");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string filePath = folderPath + Path.GetFileName(fileImagenProducto.FileName);
+                    fileImagenProducto.SaveAs(filePath);
+
+                    
+                    string strFileName = "Images/" + nombreCategoria + "/" + fileImagenProducto.FileName;
+
+                    BEArticulo Articulo = new BEArticulo();
+                    Articulo.Descripcion = nombre;
+                    Articulo.PrecioUnitario = precio;
+                    Articulo.URL = strFileName;
+                    Articulo.Categoria = categoria.ToString();
+
+                    OrderManager orderManager = new OrderManager();
+                    orderManager.GuardarArticulo(Articulo);
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script> alert(\"Fallo al guardar el articulo\")  </script>");
+                }
+            }
+            else
+            {
+                Response.Write("<script> alert(\"Debe seleccionar una imagen\")  </script>");
+
+            }
+        }
+    }
 }

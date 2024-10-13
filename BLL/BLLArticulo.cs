@@ -23,6 +23,8 @@ namespace BLL
             ht.Add("@Autor", Autor.Codigo);
             ht.Add("@Nombre", Objeto.Descripcion);
             ht.Add("@Precio", Objeto.PrecioUnitario);
+            ht.Add("@Image", Objeto.URL);
+            ht.Add("@Categoria", Objeto.Categoria);
             bd.LeerSPRT(Query, ht);
             return true;
         }
