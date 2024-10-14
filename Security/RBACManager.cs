@@ -26,5 +26,14 @@ namespace Security
         {
             return bllperf.Baja(autor, perfil);
         }
+        public IList<BEPerfil> ListarRoles()
+        {
+            return bllperf.ListarNombresRoles();
+        }
+
+        public BEPerfil ListarRol(int Codigo)
+        {
+            return bllperf.ListarPerfil(Codigo);
+        }
     }
 }

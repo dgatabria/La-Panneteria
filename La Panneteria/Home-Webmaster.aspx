@@ -46,12 +46,17 @@
 <body>
 
     <script>
+        const getCookieValue = (name) => (
+            document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+        )
 
         // Get the modal
         var modal1 = document.getElementById("ModalBackup");
         var modal2 = document.getElementById("ModalLogs");
         var modal3 = document.getElementById("ModalXml");
         var modal4 = document.getElementById("ModalProductos");
+        var modal5 = document.getElementById("ModalUsuarios");
+        var modal6 = document.getElementById("ModalRoles");
 
 
         // Get the <span> element that closes the modal
@@ -59,6 +64,8 @@
         var span2 = document.getElementsByClassName("close")[1];
         var span3 = document.getElementsByClassName("close")[2];
         var span4 = document.getElementsByClassName("close")[3];
+        var span5 = document.getElementsByClassName("close")[4];
+        var span6 = document.getElementsByClassName("close")[5];
 
         //var span = document.getElementsByClassName("close")[0];
         //var modal_contenido_login = '<span class="close" id="close_btn">&times;</span>';
@@ -66,26 +73,52 @@
         //modal_contenido_login += '</td><td align="center"><br><br><br><button>Desbloquear</button><br><br><button>Cambiar Contraseña</button><br><br><button>Eliminar</button>';
         //modal_contenido_login += '<table class="tabla_usuarios"><tr class="fila_usuarios"><th colspan="4" align="center" class="header_usuarios"><b>Consola de Backup y Restore<b></th><tr><td colspan="4">&nbsp;</td></tr></tr><tr class="fila_usuarios"><th class="header_usuarios">Archivo de Backup:</th><th class="header_usuarios"><input type="text"></input></th><th class="header_usuarios"><button>Examinar</button></th><th class="header_usuarios"><button>Comenzar</button></th></tr><tr class="fila_usuarios"><th class="header_usuarios">Archivo para Restore:</th><th class="header_usuarios"><input type="text"></input></th><th class="header_usuarios"><button>Examinar</button></th><th class="header_usuarios"><button>Comenzar</button></th></tr></table>';
         function mostrar_modal_backup() {
-      
+            document.cookie = "webmaster_modal_visible=backup";
             document.getElementById("ModalBackup").style.display = "block";
         }
-        
+        function cerrar_modal_backup() {
+            document.cookie = "webmaster_modal_visible=none";
+            document.getElementById("ModalBackup").style.display = "none";
+        }
         function mostrar_modal_logs() {
-
+            document.cookie = "webmaster_modal_visible=logs";
             document.getElementById("ModalLogs").style.display = "block";
-           
         }
-
+        function cerrar_modal_logs() {
+            document.cookie = "webmaster_modal_visible=none";
+            document.getElementById("ModalLogs").style.display = "none";
+        }
         function mostrar_modal_xml() {
-
+            document.cookie = "webmaster_modal_visible=xml";
             document.getElementById("ModalXml").style.display = "block";
-
         }
-
+        function cerrar_modal_xml() {
+            document.cookie = "webmaster_modal_visible=none";
+            document.getElementById("ModalXml").style.display = "none";
+        }
         function mostrar_modal_productos() {
-
+            document.cookie = "webmaster_modal_visible=productos";
             document.getElementById("ModalProductos").style.display = "block";
-
+        }
+        function cerrar_modal_productos() {
+            document.cookie = "webmaster_modal_visible=none";
+            document.getElementById("ModalProductos").style.display = "none";
+        }
+        function mostrar_modal_usuarios() {
+            document.cookie = "webmaster_modal_visible=usuarios";
+            document.getElementById("ModalUsuarios").style.display = "block";
+        }
+        function cerrar_modal_usuarios() {
+            document.cookie = "webmaster_modal_visible=none";
+            document.getElementById("ModalUsuarios").style.display = "none";
+        }
+        function mostrar_modal_roles() {
+            document.cookie = "webmaster_modal_visible=roles";
+            document.getElementById("ModalRoles").style.display = "block";
+        }
+        function cerrar_modal_roles() {
+            document.cookie = "webmaster_modal_visible=none";
+            document.getElementById("ModalRoles").style.display = "none";
         }
 
         window.onclick = function (event) {
@@ -93,19 +126,34 @@
             var modal2 = document.getElementById("ModalLogs");
             var modal3 = document.getElementById("ModalXml");
             var modal4 = document.getElementById("ModalProductos");
+            var modal5 = document.getElementById("ModalUsuarios");
+            var modal6 = document.getElementById("ModalRoles");
 
             if (event.target == modal1) {
                 modal1.style.display = "none";
+                document.cookie = "webmaster_modal_visible=none";
             }
             if (event.target == modal2) {
                 modal2.style.display = "none";
+                document.cookie = "webmaster_modal_visible=none";
             }
             if (event.target == modal3) {
                 modal3.style.display = "none";
+                document.cookie = "webmaster_modal_visible=none";
             }
             if (event.target == modal4) {
                 modal4.style.display = "none";
+                document.cookie = "webmaster_modal_visible=none";
             }
+            if (event.target == modal5) {
+                modal5.style.display = "none";
+                document.cookie = "webmaster_modal_visible=none";
+            }
+            if (event.target == modal6) {
+                modal6.style.display = "none";
+                document.cookie = "webmaster_modal_visible=none";
+            }
+            
         }
         function CerrarSesion() {
 
@@ -166,6 +214,11 @@
                         <p id="texto_logs"><b>Lista de precios</b></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_productos()"><br /><img src="/Images/WebMaster/productos.jpg" alt="ABM Productos" width="95%">
                         <p id="texto_logs"><b>ABM de Productos</b></p></div>
+                        <div align="center" class="menuitem" onclick="mostrar_modal_usuarios()"><br /><img src="/Images/WebMaster/ABMusuarios.jpg" alt="ABM Productos" width="95%">
+                        <p id="texto_logs"><b>ABM de Usuarios</b></p></div>
+                        <div align="center" class="menuitem" onclick="mostrar_modal_roles()"><br /><img src="/Images/WebMaster/ABMroles.jpg" alt="ABM Productos" width="95%">
+                        <p id="texto_logs"><b>ABM de Roles</b></p></div>
+
         </div> 
 <form runat="server"> 
     <!-- The Modal -->
@@ -176,7 +229,7 @@
         <ContentTemplate>
   <!-- Modal content -->
   <div class="modal-content" style="justify-content:center" id="modal-content-logs">
-    <span class="close" id="close_btn3" onclick="document.getElementById('ModalLogs').style.display='none'">&times;</span>
+    <span class="close" id="close_btn3" onclick="cerrar_modal_logs()">&times;</span>
 
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
@@ -224,7 +277,7 @@
         <ContentTemplate>
   <!-- Modal content -->
   <div class="modal-content" style="justify-content:center" id="modal-content-backup">
-        <span class="close" id="close_btn2" onclick="document.getElementById('ModalBackup').style.display='none'">&times;</span>
+        <span class="close" id="close_btn4" onclick="cerrar_modal_backup()">&times;</span>
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
               <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Consola de Backup y Restore&nbsp;&nbsp;</b></th>
@@ -255,7 +308,7 @@
         <ContentTemplate>
   <!-- Modal content -->
   <div class="modal-content" style="justify-content:center" id="modal-content-xml">
-        <span class="close" id="close_btn2" onclick="document.getElementById('ModalXml').style.display='none'">&times;</span>
+        <span class="close" id="close_btn6" onclick="cerrar_modal_xml()">&times;</span>
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
               <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Administración de Precios&nbsp;&nbsp;</b></th>
@@ -280,12 +333,9 @@
 </div>
 
 <div id="ModalProductos" class="modal">
-    
-   
     <ContentTemplate>
-
 <div class="modal-content" style="justify-content:center" id="modal-content-productos">
-    <span class="close" id="close_btn2" onclick="document.getElementById('ModalProductos').style.display='none'">&times;</span>
+    <span class="close" id="close_btn2" onclick="cerrar_modal_productos()">&times;</span>
 <table class="tabla_usuarios">
     <tr class="fila_usuarios">
         <th colspan="6" align="center" class="header_usuarios">
@@ -337,6 +387,26 @@
     </ContentTemplate>
       
 </div>
+
+
+
+    <div id="ModalUsuarios" class="modal" >
+    <ContentTemplate>
+<div class="modal-content" style="justify-content:center" id="modal-content-usuarios">
+    <span class="close" id="close_btn5" onclick="cerrar_modal_usuarios()">&times;</span>
+
+    <asp:Table ID="Table1" runat="server" CssClass="tabla_usuarios" BorderWidth="1"></asp:Table>
+    <br />
+    
+
+
+</div>
+    </ContentTemplate>
+      
+</div>
+<asp:HiddenField ID="hfModalVisible" runat="server" Value="none" />
+
+
 </form>  
 
         <footer>
@@ -349,8 +419,22 @@
       </div>
 </body>
     <script>
-
-
+        let x = getCookieValue("webmaster_modal_visible");
+        if (x === "usuarios") {
+            mostrar_modal_usuarios();
+        }
+        if (x === "backup") {
+            mostrar_modal_backup();
+        }
+        if (x === "xml") {
+            mostrar_modal_xml();
+        }
+        if (x === "productos") {
+            mostrar_modal_productos();
+        }
+        if (x === "roles") {
+            mostrar_modal_roles();
+        }
     </script>
 </html>
 

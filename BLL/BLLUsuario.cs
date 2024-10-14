@@ -27,6 +27,17 @@ namespace BLL
             bd.LeerSPRT(Query, ht);
             return true;
         }
+        public bool Lock(BEUsuario Objeto)
+        {
+            if (Objeto == null) throw new Exception("Ningun usuario especificado");
+
+            string Query = "BloquearUsuario";
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+            ht.Add("@Codigo", Objeto.Codigo);
+            bd.LeerSPRT(Query, ht);
+            return true;
+        }
         public bool Unlock(BEUsuario autor, BEUsuario Objeto)
         {
             if (Objeto == null) throw new Exception("Ningun usuario especificado");
@@ -159,7 +170,7 @@ namespace BLL
                     tmpusuario.username = fila["USERNAME"].ToString();
                     tmpusuario.Nombre = fila["NAME"].ToString();
                     tmpusuario.Apellido = fila["SURNAME"].ToString();
-                    tmpusuario.Perfil = blpf.ListarObjeto(tmprol);
+                    tmpusuario.Perfil = blpf.ListarRol2(tmprol);
                     BEIdioma bld = new BEIdioma();
                     bld.Codigo = Convert.ToInt32(fila["IDIOMA"]);
                     tmpusuario.Idioma = bli.ListarObjeto(bld);
@@ -167,7 +178,39 @@ namespace BLL
                 }
             }
             return tmpusuario;
+        }
+        public BEUsuario ListarPorID(BEUsuario Objeto)
+        {
+            BEUsuario tmpusuario = new BEUsuario();
+            BEPerfil tmprol;
+            DataTable tablas;
+            BLLIdioma bli = new BLLIdioma();
+            string Query = "ListarUsuarioPorID";
+            Hashtable ht = new Hashtable();
+            bd = new Acceso();
+            BLLPerfil blpf = new BLLPerfil();
 
+            ht.Add("@ID", Objeto.Codigo);
+            tablas = bd.LeerSP(Query, ht);
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    tmpusuario = new BEUsuario();
+                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID_PERFIL"]), fila["PERFIL_NOMBRE"].ToString());
+                    tmpusuario.Codigo = Convert.ToInt32(fila["ID"]);
+                    tmpusuario.username = fila["USERNAME"].ToString();
+                    tmpusuario.Nombre = fila["NAME"].ToString();
+                    tmpusuario.Apellido = fila["SURNAME"].ToString();
+                    tmpusuario.Perfil = blpf.ListarRol2(tmprol);
+                    tmpusuario.Locked = (Convert.ToInt32(fila["LOCKED"]) > 2) ? true: false;
+                    BEIdioma bld = new BEIdioma();
+                    bld.Codigo = Convert.ToInt32(fila["IDIOMA"]);
+                    tmpusuario.Idioma = bli.ListarObjeto(bld);
+                    if (Convert.ToInt32(fila["LOCKED"]) > 2) tmpusuario.Locked = true; else tmpusuario.Locked = false;
+                }
+            }
+            return tmpusuario;
         }
 
         public List<BEUsuario> ListarTodo()
@@ -193,7 +236,7 @@ namespace BLL
                     tmpusuario.username = fila["USERNAME"].ToString();
                     tmpusuario.Nombre = fila["NAME"].ToString();
                     tmpusuario.Apellido = fila["SURNAME"].ToString();
-                    tmpusuario.Perfil = blpf.ListarObjeto(tmprol);
+                    tmpusuario.Perfil = blpf.ListarRol2(tmprol);
                     if (Convert.ToInt32(fila["LOCKED"]) > 2) tmpusuario.Locked = true; else tmpusuario.Locked = false;
 
                     ListaUsuarios.Add(tmpusuario);

@@ -149,7 +149,7 @@ namespace BLL
                     tmpusuario.username = fila["USERNAME"].ToString();
                     tmpusuario.Nombre = fila["NAME"].ToString();
                     tmpusuario.Apellido = fila["SURNAME"].ToString();
-                    tmpusuario.Perfil = blpf.ListarObjeto(tmprol);
+                    tmpusuario.Perfil = blpf.ListarRol2(tmprol);
                     BEIdioma bld = new BEIdioma();
                     bld.Codigo = Convert.ToInt32(fila["IDIOMA"]);
                     tmpusuario.Idioma = bli.ListarObjeto(bld);

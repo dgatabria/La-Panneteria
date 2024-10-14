@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,8 +16,293 @@ namespace La_Panneteria
 {
     public partial class WebForm2 : System.Web.UI.Page
     {
+
+
+
+        protected void BtnEliminarUsuario(object sender, EventArgs e)
+        {
+            
+            if  (sender is Button)
+            {
+                string s = ((Button)sender).ID;
+                Regex re = new Regex("btn_eliminar_usuario_");
+
+                int i = Convert.ToInt32(re.Replace(s, ""));
+                UserManager userManager = new UserManager();
+                BEUsuario bEUsuario = new BEUsuario();
+                bEUsuario.Codigo = i;
+                userManager.Borrar(bEUsuario);
+                CargarTablaUsuarios();
+            }
+        }
+
+        protected void PwChange(object sender, EventArgs e)
+        {
+
+            if (sender is TextBox)
+            {
+                string s = ((TextBox)sender).ID;
+                Regex re = new Regex("txt_password_usuario_");
+
+                int i = Convert.ToInt32(re.Replace(s, ""));
+                UserManager userManager = new UserManager();
+                BEUsuario bEUsuario = new BEUsuario();
+                bEUsuario.Codigo = i;
+                bEUsuario = userManager.ListarUsuarioPorID(bEUsuario);
+                s = ((TextBox)sender).Text;
+                userManager.ChangePW(bEUsuario, s);
+                CargarTablaUsuarios();
+            }
+        }
+        protected void LockUnlock(object sender, EventArgs e)
+        {
+            if (sender is CheckBox)
+            {
+                string s = ((CheckBox)sender).ID;
+                CheckBox cb = (CheckBox)sender;
+                Regex re = new Regex("cb_locked_usuario_");
+
+                int i = Convert.ToInt32(re.Replace(s, ""));
+                UserManager userManager = new UserManager();
+                BEUsuario bEUsuario = new BEUsuario();
+                bEUsuario.Codigo = i;
+                bEUsuario = userManager.ListarUsuarioPorID(bEUsuario);
+                if (cb.Checked)
+                {
+                    userManager.Lock(bEUsuario);
+                } else
+                {
+                    userManager.Unlock(bEUsuario);
+                }
+                CargarTablaUsuarios();
+            }
+        }
+        protected void BtnCrearUsuario(object sender, EventArgs e)
+        {
+            if (sender is Button)
+            {
+                BEUsuario usuario = new BEUsuario();
+                usuario.username = ((TextBox)FindControl("txt_nuevo_usuario_username")).Text;
+                usuario.Nombre = ((TextBox)FindControl("txt_nuevo_usuario_nombre")).Text;
+                usuario.Apellido = ((TextBox)FindControl("txt_nuevo_usuario_apellido")).Text;
+                usuario.Password = ((TextBox)FindControl("txt_nuevo_usuario_password")).Text;
+                usuario.Idioma = SessionManager.GetInstance.Usuario.Idioma;
+
+
+                RBACManager rb = new RBACManager();
+                usuario.Perfil =  rb.ListarRol(Convert.ToInt32(((DropDownList)FindControl("ddl_nuevo_usuario_perfil")).SelectedValue));
+
+                UserManager userManager= new UserManager();
+                userManager.Guardar(usuario);
+
+                CargarTablaUsuarios();
+            }
+        }
+
+        protected void ReasignaRol(object sender, EventArgs e)
+        {
+            if (sender is DropDownList)
+            {
+                string s = ((DropDownList)sender).ID;
+                DropDownList ddl = (DropDownList)sender;
+                Regex re = new Regex("ddl_perfil_usuario_");
+
+                int i = Convert.ToInt32(re.Replace(s, ""));
+                UserManager userManager = new UserManager();
+                RBACManager rb = new RBACManager();
+                BEUsuario bEUsuario = new BEUsuario();
+                bEUsuario.Codigo = i;
+                bEUsuario = userManager.ListarUsuarioPorID(bEUsuario);
+                BEPerfil bEPerfil = rb.ListarRol(Convert.ToInt32(ddl.SelectedValue));
+
+                bEUsuario.Perfil = bEPerfil;
+                userManager.Guardar(bEUsuario);
+                CargarTablaUsuarios();
+            }
+        }
+        void CargarTablaUsuarios()
+        {
+            Security.UserManager userManager = new Security.UserManager();
+            RBACManager RBACManager = new RBACManager();
+            TableRow row = new TableRow();
+            TableCell tableCell = new TableCell();
+            DropDownList ddl;
+            Button btn;
+            TextBox textBox;
+            CheckBox cb;
+            Table1.Rows.Clear();
+            row.BorderWidth = 1;
+            row.BackColor = System.Drawing.Color.Beige;
+            tableCell.Text = "Usuario";
+            row.Cells.Add(tableCell);
+            //tableCell.BorderWidth = 1;
+            tableCell = new TableCell();
+
+            tableCell = new TableCell();
+            tableCell.Text = "Contraseña";
+            //tableCell.BorderWidth = 1;
+            row.Cells.Add(tableCell);
+
+
+            tableCell = new TableCell();
+            tableCell.Text = "Bloqueado";
+            //tableCell.BorderWidth = 1;
+            row.Cells.Add(tableCell);
+
+
+            tableCell = new TableCell();
+            tableCell.Text = "Nombre";
+            //tableCell.BorderWidth = 1;
+            row.Cells.Add(tableCell);
+
+
+            tableCell = new TableCell();
+            tableCell.Text = "Apellido";
+            //tableCell.BorderWidth = 1;
+            row.Cells.Add(tableCell);
+
+            tableCell = new TableCell();
+            tableCell.Text = "Rol";
+            //tableCell.BorderWidth = 1;
+            row.Cells.Add(tableCell);
+            Table1.Rows.Add(row);
+
+            tableCell = new TableCell();
+            tableCell.Text = "Acciones";
+            //tableCell.BorderWidth = 1;
+            row.Cells.Add(tableCell);
+            Table1.Rows.Add(row);
+            foreach (BEUsuario usuario in userManager.ListarUsuarios())
+            {
+                row = new TableRow();
+
+                tableCell = new TableCell();
+                tableCell.Text = usuario.username;
+                row.Cells.Add(tableCell);
+
+                tableCell = new TableCell();
+
+                textBox = new TextBox();
+                textBox.ID = "txt_password_usuario_" + usuario.Codigo.ToString();
+                textBox.TextMode = TextBoxMode.Password;
+                textBox.TextChanged += PwChange;
+                tableCell.Controls.Add(textBox);
+
+                
+                row.Cells.Add(tableCell);
+
+                cb = new CheckBox();
+                cb.Checked = usuario.Locked;
+                cb.AutoPostBack = true;
+                cb.ID = "cb_locked_usuario_" + usuario.Codigo.ToString();
+                
+                cb.CheckedChanged += LockUnlock;
+                tableCell = new TableCell();
+                tableCell.Controls.Add(cb);
+                
+                row.Cells.Add(tableCell);
+
+                tableCell = new TableCell();
+                tableCell.Text = usuario.Nombre;
+                row.Cells.Add(tableCell);
+                tableCell = new TableCell();
+                tableCell.Text = usuario.Apellido;
+                row.Cells.Add(tableCell);
+                tableCell = new TableCell();
+
+                ddl = new DropDownList();
+                ddl.ID = "ddl_perfil_usuario_" + usuario.Codigo.ToString();
+
+                
+                foreach (BEPerfil perfil in RBACManager.ListarRoles())
+                {
+                    ddl.Items.Add(new ListItem(perfil.Nombre, perfil.Codigo.ToString()));
+                    if (perfil.Codigo == usuario.Perfil.Codigo)
+                    {
+                        ddl.SelectedValue = perfil.Codigo.ToString();  
+                    }
+
+                }
+                ddl.AutoPostBack = true;
+                ddl.SelectedIndexChanged += ReasignaRol;
+                tableCell.Controls.Add(ddl);
+                //tableCell.Text = usuario.Perfil.Nombre.ToString();
+                row.Cells.Add(tableCell);
+                tableCell = new TableCell();
+
+
+                btn = new Button();
+                btn.Text = "Eliminar";
+                btn.ID = "btn_eliminar_usuario_" + usuario.Codigo.ToString();
+                btn.Click += BtnEliminarUsuario;
+                tableCell.Controls.Add(btn);
+                row.Cells.Add(tableCell);
+
+                Table1.Rows.Add(row);
+               
+            }
+            // Creacion de usuarios
+
+            row = new TableRow();
+
+            tableCell = new TableCell();
+            textBox = new TextBox();
+            textBox.ID = "txt_nuevo_usuario_username";
+            tableCell.Controls.Add(textBox);
+            row.Cells.Add(tableCell);
+
+
+            tableCell = new TableCell();
+            textBox = new TextBox();
+            textBox.TextMode = TextBoxMode.Password;
+            textBox.ID = "txt_nuevo_usuario_password";
+            tableCell.Controls.Add(textBox);
+            row.Cells.Add(tableCell);
+
+
+            tableCell = new TableCell();
+            row.Cells.Add(tableCell);
+
+            tableCell = new TableCell();
+            textBox = new TextBox();
+            textBox.ID = "txt_nuevo_usuario_nombre";
+            tableCell.Controls.Add(textBox);
+            row.Cells.Add(tableCell);
+
+            tableCell = new TableCell();
+            textBox = new TextBox();
+            textBox.ID = "txt_nuevo_usuario_apellido";
+            tableCell.Controls.Add(textBox);
+            row.Cells.Add(tableCell);
+
+            tableCell = new TableCell();
+            ddl = new DropDownList();
+            ddl.ID = "ddl_nuevo_usuario_perfil";
+
+
+            foreach (BEPerfil perfil in RBACManager.ListarRoles())
+            {
+                ddl.Items.Add(new ListItem(perfil.Nombre, perfil.Codigo.ToString()));
+            }
+            tableCell.Controls.Add(ddl);
+            //tableCell.Text = usuario.Perfil.Nombre.ToString();
+
+            row.Cells.Add(tableCell);
+            tableCell = new TableCell();
+            btn = new Button();
+            btn.Text = "Crear";
+            btn.ID = "btn_crear_usuario";
+            btn.Click += BtnCrearUsuario;
+            tableCell.Controls.Add(btn);
+            row.Cells.Add(tableCell);
+
+            Table1.Rows.Add(row);
+
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            CargarTablaUsuarios();
 
         }
 
@@ -352,5 +638,7 @@ namespace La_Panneteria
 
             }
         }
+
+
     }
 }

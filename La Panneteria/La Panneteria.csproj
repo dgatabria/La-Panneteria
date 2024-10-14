@@ -189,6 +189,12 @@
     <Content Include="Images\Salados\miga3pal.jpg" />
     <Content Include="Images\Salados\miga3roque.jpg" />
     <Content Include="Images\Salados\miga3tomate.jpg" />
+    <Content Include="Images\WebMaster\ABMRoles.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\WebMaster\ABMusuarios.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\WebMaster\Backup.jpg" />
     <Content Include="CSS\login.css" />
     <Content Include="Images\WebMaster\DV.jpg" />

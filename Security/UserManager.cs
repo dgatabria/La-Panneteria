@@ -24,6 +24,17 @@ namespace Security
             BLLPerfil blr = new BLLPerfil();
             return blr.ListarTodo();
         }
+
+        public BEUsuario ListarUsuarioPorNombre(BEUsuario blus)
+        {
+            BLLUsuario blu = new BLLUsuario();
+            return blu.ListarObjeto(blus);
+        }
+        public BEUsuario ListarUsuarioPorID(BEUsuario blus)
+        {
+            BLLUsuario blu = new BLLUsuario();
+            return blu.ListarPorID(blus);
+        }
         public bool Guardar(BEUsuario usuario)
         {
             Regex re = new Regex("^[a-zA-Z]+$");
@@ -85,7 +96,11 @@ namespace Security
         {
             BLLUsuario blu = new BLLUsuario();
             return blu.Unlock(usuario);
-
+        }
+        public bool Lock(BEUsuario usuario)
+        {
+            BLLUsuario blu = new BLLUsuario();
+            return blu.Lock(usuario);
         }
         public int VerifyPW(BEUsuario usuario, string pw)
         {

@@ -119,7 +119,7 @@ namespace BLL
             bd = new Acceso();
             string Query = "ListarRol";
             Hashtable ht = new Hashtable();
-            ht.Add("@Codigo", Objeto.Codigo);
+            ht.Add("@ID", Objeto.Codigo);
             tablas = bd.LeerSP(Query, ht);
             BEPerfil tmpperf = null;
             BEPerfil tmpperfh = null;
@@ -140,7 +140,7 @@ namespace BLL
                 {
                     tmpperfh = new BEPerfil(Convert.ToInt32(fila["ID_PERFIL"]), fila["NOMBRE_PERFIL"].ToString());
                     tmpperfh = ListarRol2(tmpperf);
-                    tmpperm.AgregarHijo(tmpperfh);
+                    tmpperf.AgregarHijo(tmpperfh);
                 }
                 // Buscar permisos hijos
                 Query = "ListarPermisosPorRol";
@@ -151,7 +151,7 @@ namespace BLL
                 foreach (DataRow fila in tablas.Rows)
                 {
                     tmpperm = new BEPermiso(Convert.ToInt32(fila["ID_PERMISO"]), fila["NOMBRE_PERMISO"].ToString());
-                    tmpperm.AgregarHijo(tmpperf);
+                    tmpperf.AgregarHijo(tmpperf);
                 }
             }
             return tmpperf;
@@ -356,7 +356,58 @@ namespace BLL
 
             return ListaRoles;
         }
-        public List<BEPerfil> ListarTodo2()
+
+        public BEPerfil ListarPerfil(int Codigo)
+        {
+            BEPerfil Rol = new BEPerfil();
+            DataTable tablas;
+            string Query = "ListarRol";
+
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+            ht.Add("@ID", Codigo);
+            tablas = bd.LeerSP(Query, ht);
+
+            BEPerfil tmprol = null;
+
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID"]), fila["NOMBRE"].ToString());
+                   // tmprol = ListarRol2(tmprol);
+                   //ListaRoles.Add(ListarRol2(tmprol));
+                }
+            }
+
+            return tmprol;
+        }
+        public BEPerfil ListarPerfilFull(BEPerfil perfil)
+        {
+            BEPerfil Rol = new BEPerfil();
+            DataTable tablas;
+            string Query = "ListarRol";
+
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+            ht.Add("@ID", perfil.Codigo);
+            tablas = bd.LeerSP(Query, ht);
+
+            BEPerfil tmprol = null;
+
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID_PERFIL"]), fila["NOMBRE"].ToString());
+                    tmprol = ListarRol2(tmprol);
+                    //ListaRoles.Add(ListarRol2(tmprol));
+                }
+            }
+
+            return tmprol;
+        }
+        public List<BEPerfil> ListarNombresRoles()
         {
             List<BEPerfil> ListaRoles = new List<BEPerfil>();
             DataTable tablas;
@@ -380,5 +431,7 @@ namespace BLL
 
             return ListaRoles;
         }
+
+
     }
 }
