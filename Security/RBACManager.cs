@@ -35,5 +35,26 @@ namespace Security
         {
             return bllperf.ListarPerfil(Codigo);
         }
+        public BEPerfil ListarRol(string nombre)
+        {
+            return bllperf.ListarPerfil(nombre);
+        }
+        public BEPerfil ListarRolFull(BEPerfil perfil)
+        {
+            return bllperf.ListarRol2(perfil);
+        }
+        public List<BEPermiso> Conjugar(BEPerfil perfil)
+        {
+            return bllperf.ConjugarRol(perfil);
+        }
+        public List<BEPermiso> ListarPermisos()
+        {
+            return bllperm.ListarTodo();
+        }
+        public bool RolContieneRol(BEPerfil padre, BEPerfil hijo)
+        {
+            return bllperf.RolContieneRol(padre, hijo);
+        }
+
     }
 }

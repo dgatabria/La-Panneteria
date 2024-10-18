@@ -38,7 +38,7 @@ namespace BLL
             string s = "";
             string r = "";
 
-            foreach (RBAC p in Objeto.Permisos)
+            foreach (RBAC p in Objeto.ObtenerHijos())
             {
                 if ( p is BEPermiso )
                 {
@@ -50,7 +50,7 @@ namespace BLL
                 }
                 Regex regex = new Regex(",$");
                 s = regex.Replace(s, "");
-                r = regex.Replace(s, "");
+                r = regex.Replace(r, "");
             }
             ht.Add("@Permisos", s);
             ht.Add("@Roles", r);
@@ -112,6 +112,26 @@ namespace BLL
             return tmpperm;
 
         }
+        public bool RolContieneRol(BEPerfil ObjetoPadre, BEPerfil ObjetoHijo)
+        {
+            
+            DataTable tablas;
+            bd = new Acceso();
+            string Query = "ListarRolesPorRol";
+            Hashtable ht = new Hashtable();
+            ht.Add("@Codigo", ObjetoPadre.Codigo);
+            tablas = bd.LeerSP(Query, ht);
+            bool contiene = false;
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    if (Convert.ToInt32(fila["ID_PERFIL"]) == ObjetoHijo.Codigo) { contiene = true; }
+                }
+            }
+            return contiene;
+
+        }
         public BEPerfil ListarRol2(RBAC Objeto)
         {
             // un rol puede tener hijos
@@ -139,7 +159,7 @@ namespace BLL
                 foreach (DataRow fila in tablas.Rows)
                 {
                     tmpperfh = new BEPerfil(Convert.ToInt32(fila["ID_PERFIL"]), fila["NOMBRE_PERFIL"].ToString());
-                    tmpperfh = ListarRol2(tmpperf);
+                    tmpperfh = ListarRol2(tmpperfh);
                     tmpperf.AgregarHijo(tmpperfh);
                 }
                 // Buscar permisos hijos
@@ -151,7 +171,7 @@ namespace BLL
                 foreach (DataRow fila in tablas.Rows)
                 {
                     tmpperm = new BEPermiso(Convert.ToInt32(fila["ID_PERMISO"]), fila["NOMBRE_PERMISO"].ToString());
-                    tmpperf.AgregarHijo(tmpperf);
+                    tmpperf.AgregarHijo(tmpperm);
                 }
             }
             return tmpperf;
@@ -224,46 +244,61 @@ namespace BLL
             return tmplista2;
         }
 
-        void CuentaHijos(Hashtable ht,int j, int i, int m)
+        void CuentaHijos(List<RelacionDeRoles> ht,int j, int i, int m)
         {
             i++;
             if (i > m) { throw new Exception("Referencia circular detectada"); }
             if (ht.Count > 0)
             {
-                foreach (DictionaryEntry entrada in ht)
+                foreach (RelacionDeRoles entrada in ht)
                 {
                     // Armo la lista de hijos
-                    if (Convert.ToInt32(entrada.Key) == j)
+                    if (Convert.ToInt32(entrada.RolPadre) == j)
                     {
-                        CuentaHijos(ht, Convert.ToInt32(entrada.Value), i, m);
+                        CuentaHijos(ht, Convert.ToInt32(entrada.RolHijo), i, m);
                     }
                     
                 }
             }
         }
+
+        public class RelacionDeRoles
+        {
+            public int RolPadre { get; set; }
+            public int RolHijo { get; set; }
+            public RelacionDeRoles(int a, int b)
+            {
+                RolPadre = a;
+                RolHijo = b;
+            }
+
+
+        }
+
         public void VerificarReferenciasCirculares(BEPerfil Objeto)
         {
-            Hashtable mapa = new Hashtable();
+            List<RelacionDeRoles> mapa = new List<RelacionDeRoles>();
             DataTable tablas;
             bd = new Acceso();
             string Query = "ListarMapaDeRoles";
             Hashtable ht = new Hashtable();
+            
             tablas = bd.LeerSP(Query, ht);
             int i,j;
             if (tablas.Rows.Count > 0)
             {
                 foreach (DataRow fila in tablas.Rows)
                 {
-                    mapa.Add(Convert.ToInt32(fila["ID_PERFIL_PADRE"]), Convert.ToInt32(fila["ID_PERFIL_HIJO"]));
+                    mapa.Add(new RelacionDeRoles(Convert.ToInt32(fila["ID_PERFIL_PADRE"]), Convert.ToInt32(fila["ID_PERFIL_HIJO"])));
                 }
             }
             // emular la generacion del ID para el insert en la tabla
             if (Objeto.Codigo == 0)
             {
                 i = 0;
-                foreach (DictionaryEntry entrada in mapa)
+                foreach (RelacionDeRoles entrada in mapa)
                 {
-                    if (Convert.ToInt32(entrada.Key) > i) {  i = Convert.ToInt32(entrada.Key); }
+                    if (entrada.RolPadre > i) {  i = entrada.RolPadre; }
                 }
                 i++;
             } else { i = Objeto.Codigo; }
@@ -272,7 +307,7 @@ namespace BLL
             {
                 if (r is BEPerfil)
                 {
-                    mapa.Add(i, r.Codigo);
+                    mapa.Add(new RelacionDeRoles(i, r.Codigo));
                 }
             }
             // Llamar a CuentaHijos para cada entrada en la tabla. 
@@ -280,12 +315,12 @@ namespace BLL
             // una referencia circular.
             i = 0;
             j = mapa.Count;
-            foreach (DictionaryEntry entrada in mapa)
+            foreach (RelacionDeRoles entrada in mapa)
             {
                 i = 0;
-                j = Convert.ToInt32(entrada.Key);
+                
                 // Armo la lista de hijos
-                CuentaHijos(ht, Convert.ToInt32(entrada.Value), i, j);
+                CuentaHijos(mapa, entrada.RolPadre, i, j);
             }
 
         }
@@ -382,6 +417,31 @@ namespace BLL
 
             return tmprol;
         }
+        public BEPerfil ListarPerfil(string nombre)
+        {
+            BEPerfil Rol = new BEPerfil();
+            DataTable tablas;
+            string Query = "ListarRolPorNombre";
+
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+            ht.Add("@Nombre", nombre);
+            tablas = bd.LeerSP(Query, ht);
+
+            BEPerfil tmprol = null;
+
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID"]), fila["NOMBRE"].ToString());
+                    // tmprol = ListarRol2(tmprol);
+                    //ListaRoles.Add(ListarRol2(tmprol));
+                }
+            }
+
+            return tmprol;
+        }
         public BEPerfil ListarPerfilFull(BEPerfil perfil)
         {
             BEPerfil Rol = new BEPerfil();
@@ -399,7 +459,7 @@ namespace BLL
             {
                 foreach (DataRow fila in tablas.Rows)
                 {
-                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID_PERFIL"]), fila["NOMBRE"].ToString());
+                    tmprol = new BEPerfil(Convert.ToInt32(fila["ID"]), fila["NOMBRE"].ToString());
                     tmprol = ListarRol2(tmprol);
                     //ListaRoles.Add(ListarRol2(tmprol));
                 }

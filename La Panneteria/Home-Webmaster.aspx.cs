@@ -300,9 +300,24 @@ namespace La_Panneteria
 
         }
 
+        protected void CargarTablaRBAC()
+        {
+            RBACManager rbm = new RBACManager();
+            ListBoxRoles.DataSource = null;
+            ListBoxRoles.DataSource = rbm.ListarRoles();
+            ListBoxRoles.DataBind();
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            CargarTablaUsuarios();
+            if (!IsPostBack)
+            {
+                CargarTablaUsuarios();
+                CargarTablaRBAC();
+                ListBoxRoles.AutoPostBack = true;
+                CheckBoxListPermisos.AutoPostBack = true;
+                CheckBoxListRoles.AutoPostBack = true;
+            }
+            
 
         }
 
@@ -639,6 +654,95 @@ namespace La_Panneteria
             }
         }
 
+        protected void RewriteRole(Object sender, EventArgs e)
+        {
+            RBACManager rbm = new RBACManager();
+            BEPerfil perfseleccionado;
+            if (ListBoxRoles.SelectedIndex != -1)
+            {
+                perfseleccionado = rbm.ListarRol(ListBoxRoles.SelectedValue);
+            }
 
+            else { return; }
+
+            BEPerfil perfreescrito = new BEPerfil(perfseleccionado.Codigo,perfseleccionado.Nombre);
+
+            foreach (ListItem item in CheckBoxListRoles.Items)
+            {
+                if (item.Selected)
+                {
+                    perfreescrito.AgregarHijo(new BEPerfil(Convert.ToInt32(item.Value), item.Text));
+                }
+            }
+            foreach (ListItem item in CheckBoxListPermisos.Items)
+            {
+                if (item.Selected)
+                {
+                    perfreescrito.AgregarHijo(new BEPermiso(Convert.ToInt32(item.Value), item.Text));
+                }
+            }
+
+            //try
+            //{
+                rbm.GuardarPerfil(SessionManager.GetInstance.Usuario, perfreescrito);
+           // } catch (Exception ex)
+            //{
+              //  LabelErroresRBAC.Text = ex.Message;
+           // }
+        }
+        protected void ListBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RBACManager rbm = new RBACManager();
+            BEPerfil perfseleccionado;
+            if (ListBoxRoles.SelectedIndex != -1)
+            {
+                perfseleccionado = rbm.ListarRol(ListBoxRoles.SelectedValue);
+            } else {  return; }
+            
+            if (perfseleccionado == null){ return; }
+
+            perfseleccionado = rbm.ListarRolFull(perfseleccionado);
+            int i = 0;
+            CheckBoxListRoles.Items.Clear();
+
+            
+            foreach (BEPerfil perfil in rbm.ListarRoles())
+            {
+                
+                if (perfil.Codigo != perfseleccionado.Codigo) {
+                    CheckBoxListRoles.Items.Add(new ListItem(perfil.Nombre, perfil.Codigo.ToString(), true));
+                } else
+                {
+                    CheckBoxListRoles.Items.Add(new ListItem(perfil.Nombre, perfil.Codigo.ToString(), false));
+                }
+                CheckBoxListRoles.Items[i].Selected = rbm.RolContieneRol(perfseleccionado, perfil);
+                i++;
+
+            }
+
+
+
+            CheckBoxListPermisos.Items.Clear(); 
+            CheckBoxListPermisos.DataSource = null;
+            bool check;
+            List<RBAC> pp = perfseleccionado.ObtenerHijos();
+            i = 0;
+            foreach (BEPermiso bp in rbm.ListarPermisos())
+            {
+                check = false;
+                
+                foreach (RBAC perm in pp)
+                {
+                    if (perm is BEPermiso)
+                    {
+                        if (perm.Codigo == bp.Codigo) { check = true; }
+                    }
+                }
+                CheckBoxListPermisos.Items.Add(new ListItem(bp.Nombre, bp.Codigo.ToString(),true));
+                CheckBoxListPermisos.Items[i].Selected = check;
+                i++;
+            }
+
+        }
     }
 }

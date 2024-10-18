@@ -397,9 +397,45 @@
 
     <asp:Table ID="Table1" runat="server" CssClass="tabla_usuarios" BorderWidth="1"></asp:Table>
     <br />
+</div>
+    </ContentTemplate>
+      
+</div>
+        <div id="ModalRoles" class="modal" >
+    <ContentTemplate>
+<div class="modal-content" style="justify-content:center" id="modal-content-roles">
+    <span class="close" id="close_btn7" onclick="cerrar_modal_roles()">&times;</span>
+    <table class="tabla_usuarios">
+        <tr align="center">
+            <td colspan="2" ><b>Administracion de roles</b></td>
+        </tr>
+        <tr align="center">
+            <td colspan="2"><br />Seleccione un rol</td>
+        </tr>
+        <tr align="center">
+            <td colspan="2">
+                    <asp:ListBox  ID="ListBoxRoles" runat="server" OnSelectedIndexChanged="ListBoxRoles_SelectedIndexChanged"></asp:ListBox>
+            </td>
+        </tr>
+        <tr align="center">
+            <td>Roles</td>
+            <td>Permisos</td>
+        </tr>
+        <tr align="center">
+            <td>
+                <asp:CheckBoxList ID="CheckBoxListRoles" runat="server" AutoPostBack="true" OnSelectedIndexChanged="RewriteRole"></asp:CheckBoxList>
+            </td>
+            <td>
+                <asp:CheckBoxList ID="CheckBoxListPermisos" runat="server" AutoPostBack="true" OnSelectedIndexChanged="RewriteRole"></asp:CheckBoxList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <asp:Label ID="LabelErroresRBAC" runat="server" Text="Label"></asp:Label> </td>
+        </tr>
+        
+    </table>
     
-
-
+    <br />
 </div>
     </ContentTemplate>
       

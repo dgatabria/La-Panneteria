@@ -72,15 +72,34 @@ namespace BLL
                     tmpperm = new BEPermiso(Convert.ToInt32(fila["ID"]), fila["NOMBRE"].ToString());
                     ListaPerms.Add(tmpperm);
                 }
-
-
-
             }
-
-
             return ListaPerms;
         }
 
+        public List<BEPermiso> ListarTodo()
+        {
+            List<BEPermiso> ListaPerms = new List<BEPermiso>();
+            DataTable tablas;
+            string Query = "ListarNombresPerms";
+
+            bd = new Acceso();
+            Hashtable ht = new Hashtable();
+
+            tablas = bd.LeerSP(Query, ht);
+
+            //List<BEPermiso> tmpperms;
+            BEPermiso tmpperm;
+
+            if (tablas.Rows.Count > 0)
+            {
+                foreach (DataRow fila in tablas.Rows)
+                {
+                    tmpperm = new BEPermiso(Convert.ToInt32(fila["ID"]), fila["NOMBRE"].ToString());
+                    ListaPerms.Add(tmpperm);
+                }
+            }
+            return ListaPerms;
+        }
 
     }
 }

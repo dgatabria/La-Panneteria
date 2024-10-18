@@ -249,6 +249,42 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
+        /// ListBoxRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox ListBoxRoles;
+
+        /// <summary>
+        /// CheckBoxListRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxListRoles;
+
+        /// <summary>
+        /// CheckBoxListPermisos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxListPermisos;
+
+        /// <summary>
+        /// LabelErroresRBAC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelErroresRBAC;
+
+        /// <summary>
         /// hfModalVisible control.
         /// </summary>
         /// <remarks>

@@ -25,13 +25,13 @@ namespace BusinessEntities
         public abstract void AgregarHijo(RBAC c);
 
         //Lista todos los nodos hijos, sean roles o permisos
-        public abstract IList<RBAC> ObtenerHijos();
+        public abstract List<RBAC> ObtenerHijos();
 
         //Recorre todos los hijos y devuelve array de permisos
-        public abstract IList<RBAC> Permisos { get; }
+        public abstract List<RBAC> Permisos { get; }
     }
 
-    [Serializable]
+    //[Serializable]
     public class BEPerfil : RBAC
     {
         private List<RBAC> _hijos;
@@ -53,9 +53,9 @@ namespace BusinessEntities
             _hijos.Add(c);
         }
 
-        public override IList<RBAC> ObtenerHijos()
+        public override List<RBAC> ObtenerHijos()
         {
-            return _hijos.ToArray();
+            return _hijos;
         }
 
         public override string ToString()
@@ -69,11 +69,11 @@ namespace BusinessEntities
             _hijos = null;
             this._hijos = new List<RBAC>();
         }
-        public override IList<RBAC> Permisos
+        public override List<RBAC> Permisos
         {
             get
             {
-                IList<RBAC> list = new List<RBAC>();
+                List<RBAC> list = new List<RBAC>();
 
                 foreach (var item in _hijos)
                 {
@@ -102,11 +102,11 @@ namespace BusinessEntities
     {
         private string _nombre;
         private int _id;
-        public override IList<RBAC> Permisos
+        public override List<RBAC> Permisos
         {
             get
             {
-                IList<RBAC> lista = new List<RBAC>();
+                List<RBAC> lista = new List<RBAC>();
                 lista.Add(this);
                 return lista;
             }
@@ -118,7 +118,7 @@ namespace BusinessEntities
             throw new Exception("Un PERMISO no puede tener hijos");
         }
 
-        public override IList<RBAC> ObtenerHijos()
+        public override List<RBAC> ObtenerHijos()
         {
             throw new Exception("Un PERMISO no puede tener hijos");
         }
