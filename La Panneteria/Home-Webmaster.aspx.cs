@@ -302,6 +302,7 @@ namespace La_Panneteria
 
         protected void CargarTablaRBAC()
         {
+            LabelErroresRBAC.Text = "";
             RBACManager rbm = new RBACManager();
             ListBoxRoles.DataSource = null;
             ListBoxRoles.DataSource = rbm.ListarRoles();
@@ -656,6 +657,7 @@ namespace La_Panneteria
 
         protected void RewriteRole(Object sender, EventArgs e)
         {
+            LabelErroresRBAC.Text = "";
             RBACManager rbm = new RBACManager();
             BEPerfil perfseleccionado;
             if (ListBoxRoles.SelectedIndex != -1)
@@ -682,16 +684,18 @@ namespace La_Panneteria
                 }
             }
 
-            //try
-            //{
+            try
+            {
                 rbm.GuardarPerfil(SessionManager.GetInstance.Usuario, perfreescrito);
-           // } catch (Exception ex)
-            //{
-              //  LabelErroresRBAC.Text = ex.Message;
-           // }
+            } catch (Exception ex)
+            {
+               LabelErroresRBAC.Text = ex.Message;
+                ListBoxRoles_SelectedIndexChanged(sender, e);
+            }
         }
         protected void ListBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             RBACManager rbm = new RBACManager();
             BEPerfil perfseleccionado;
             if (ListBoxRoles.SelectedIndex != -1)
@@ -743,6 +747,59 @@ namespace La_Panneteria
                 i++;
             }
 
+        }
+
+        protected void BtnBorrarRol_Click(object sender, EventArgs e)
+        {
+            RBACManager rbm = new RBACManager();
+            BEPerfil perfseleccionado;
+            if (ListBoxRoles.SelectedIndex != -1)
+            {
+                perfseleccionado = rbm.ListarRol(ListBoxRoles.SelectedValue);
+            }
+            else { return; }
+
+            if (perfseleccionado == null) { return; }
+
+            try
+            {
+                if (!rbm.Baja(SessionManager.GetInstance.Usuario, perfseleccionado) )
+                {
+                    throw new Exception("No se pudo borrar. Compruebe que el perfil no esté en uso");
+                }
+                ListBoxRoles_SelectedIndexChanged(sender, e);
+                CargarTablaRBAC();
+
+            }
+            catch (Exception ex) {
+                LabelErroresRBAC.Text = ex.Message;
+            }
+            
+        }
+
+        protected void BtnCrearRol_Click(object sender, EventArgs e)
+        {
+            if (txtCrearRol.Text.Length > 0) { 
+                BEPerfil nuevoperfil = new BEPerfil(0,txtCrearRol.Text);
+
+                RBACManager rbm = new RBACManager();
+                try
+                {
+                    if (!rbm.GuardarPerfil(SessionManager.GetInstance.Usuario, nuevoperfil))
+                    {
+                        throw new Exception("No se pudo Crear. Compruebe que el nombre sea correcto.");
+                    }
+                    txtCrearRol.Text = "";
+                    ListBoxRoles_SelectedIndexChanged(sender, e);
+                    CargarTablaRBAC();
+                }
+                catch (Exception ex)
+                {
+                    LabelErroresRBAC.Text = ex.Message;
+                }
+
+
+            }
         }
     }
 }

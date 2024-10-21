@@ -409,12 +409,16 @@
         <tr align="center">
             <td colspan="2" ><b>Administracion de roles</b></td>
         </tr>
+
         <tr align="center">
-            <td colspan="2"><br />Seleccione un rol</td>
-        </tr>
-        <tr align="center">
-            <td colspan="2">
+            <td>
+                <asp:Label ID="Label1" runat="server" Text="Seleccione un Rol"></asp:Label><br />
                     <asp:ListBox  ID="ListBoxRoles" runat="server" OnSelectedIndexChanged="ListBoxRoles_SelectedIndexChanged"></asp:ListBox>
+            </td>
+            <td>
+
+                <asp:TextBox ID="txtCrearRol" runat="server"></asp:TextBox><asp:Button ID="BtnCrearRol" runat="server" Text="Crear" Onclick="BtnCrearRol_Click" />
+                <br /><br /><asp:Button ID="BtnBorrarRol" runat="server" Text="Eliminar Seleccionado" OnClick="BtnBorrarRol_Click" />
             </td>
         </tr>
         <tr align="center">
@@ -430,7 +434,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"> <asp:Label ID="LabelErroresRBAC" runat="server" Text="Label"></asp:Label> </td>
+            <td colspan="2"> <asp:Label ID="LabelErroresRBAC" runat="server" Text="" Font-Bold="True" ForeColor="Red"></asp:Label> </td>
         </tr>
         
     </table>

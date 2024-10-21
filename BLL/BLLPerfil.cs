@@ -42,15 +42,26 @@ namespace BLL
             {
                 if ( p is BEPermiso )
                 {
-                    s = s + p.Codigo.ToString() + ",";
+                    if ( s == "" )
+                    {
+                        s = s + p.Codigo.ToString();
+                    } else
+                    {
+                        s = s + "," + p.Codigo.ToString();
+                    }
+                    
                 }
                 if (p is BEPerfil)
                 {
-                    r = r + p.Codigo.ToString() + ",";
+                    if ( r == "")
+                    {
+                        r = r + p.Codigo.ToString();
+                    } else
+                    {
+                        r = r + "," + p.Codigo.ToString();
+                    }
+                    
                 }
-                Regex regex = new Regex(",$");
-                s = regex.Replace(s, "");
-                r = regex.Replace(r, "");
             }
             ht.Add("@Permisos", s);
             ht.Add("@Roles", r);
@@ -279,6 +290,7 @@ namespace BLL
         {
             List<RelacionDeRoles> mapa = new List<RelacionDeRoles>();
             DataTable tablas;
+            BLLPerfil bllperf   = new BLLPerfil();
             bd = new Acceso();
             string Query = "ListarMapaDeRoles";
             Hashtable ht = new Hashtable();
@@ -314,7 +326,8 @@ namespace BLL
             // Si un rol tiene más hijos que entradas hay en la tabla, necesariamente hay 
             // una referencia circular.
             i = 0;
-            j = mapa.Count;
+            //j = mapa.Count;
+            j = bllperf.ListarNombresRoles().Count();
             foreach (RelacionDeRoles entrada in mapa)
             {
                 i = 0;

@@ -249,6 +249,15 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
         /// ListBoxRoles control.
         /// </summary>
         /// <remarks>
@@ -256,6 +265,33 @@ namespace La_Panneteria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox ListBoxRoles;
+
+        /// <summary>
+        /// txtCrearRol control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCrearRol;
+
+        /// <summary>
+        /// BtnCrearRol control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCrearRol;
+
+        /// <summary>
+        /// BtnBorrarRol control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnBorrarRol;
 
         /// <summary>
         /// CheckBoxListRoles control.
