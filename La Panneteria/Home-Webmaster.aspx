@@ -44,7 +44,9 @@
 </head>
 
 <body>
-
+   
+       
+    <form runat="server"> 
     <script>
         const getCookieValue = (name) => (
             document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
@@ -186,9 +188,9 @@
     }
 
     </script>
-
-       
+    
     <div class="grid">
+        
         <header>
             
           <ul class="header">
@@ -197,32 +199,41 @@
         </header>
         <logout>
                 <ul class="logout">
-                 <li><a runat="server" onserverclick="CerrarSesion" name="logout" id="logout"><p>Cerrar Sesi&oacute;n</p></a></li>
+                <li>
+                    <asp:Label ID="label_idiomas" runat="server" Text="Idioma:"></asp:Label>
+                    <asp:DropDownList ID="ddl_idiomas" runat="server"  OnSelectedIndexChanged="cambiar_idioma" AutoPostBack="true"  ></asp:DropDownList>
+                </li>
+                
+                 <li><a runat="server" onserverclick="CerrarSesion" name="logout" id="logout">
+                     <asp:Label ID="logout_button" runat="server" Text="Cerrar Sesion"></asp:Label></a></li>
                 </ul>
         </logout>
+       
         <titulo>
             <div style="width:100%;background-color:whitesmoke;align-content:center;text-align:center;font-family: 'Brush Script MT', cursive;font-size: 60px;">
-                <p>Panel del WebMaster</p>
+                <p><asp:Label ID="webmaster_panel_title" runat="server" Text="Panel del Webmaster"></asp:Label><br /></p>
+                
             </div>
         </titulo>
         <div class="menu" id="menu_container">
                         <div align="center" class="menuitem" onclick="mostrar_modal_backup()"><br /><img src="/Images/WebMaster/Backup.jpg" alt="Backup y Restore" width="95%">
-                        <p id="texto_backup"><b>Backup y Restore</b></p></div>
+                        <p id="texto_backup"> <asp:Label ID="webmaster_button_backup_restore" runat="server" Text="Backup y Restore"></asp:Label> </p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_logs()"><br /><img src="/Images/WebMaster/logs.jpg" alt="Bitácora del sistema" width="95%">
-                        <p id="texto_logs"><b>Bit&aacute;cora del sistema</b></p></div>
+                        <p id="texto_logs">
+                            <asp:Label ID="webmaster_button_logs" runat="server" Text="Bitacora del Sistema"></asp:Label></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_xml()"><br /><img src="/Images/WebMaster/lista.png" alt="XML" width="95%">
-                        <p id="texto_logs"><b>Lista de precios</b></p></div>
+                        <p id="texto_precios"> <asp:Label ID="webmaster_button_price_list" runat="server" Text="Lista de precios"></asp:Label></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_productos()"><br /><img src="/Images/WebMaster/productos.jpg" alt="ABM Productos" width="95%">
-                        <p id="texto_logs"><b>ABM de Productos</b></p></div>
+                        <p id="texto_productos"> <asp:Label ID="webmaster_button_products_mgmt" runat="server" Text="ABM de Productos"></asp:Label></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_usuarios()"><br /><img src="/Images/WebMaster/ABMusuarios.jpg" alt="ABM Productos" width="95%">
-                        <p id="texto_logs"><b>ABM de Usuarios</b></p></div>
+                        <p id="texto_usuarios">  <asp:Label ID="webmaster_button_user_mgmt" runat="server" Text="ABM de Usuarios"></asp:Label></p></div>
                         <div align="center" class="menuitem" onclick="mostrar_modal_roles()"><br /><img src="/Images/WebMaster/ABMroles.jpg" alt="ABM Productos" width="95%">
-                        <p id="texto_logs"><b>ABM de Roles</b></p></div>
+                        <p id="texto_roles"> <asp:Label ID="webmaster_button_role_mgmt" runat="server" Text="ABM de Roles"></asp:Label></p></div>
 
         </div> 
-<form runat="server"> 
+   
     <!-- The Modal -->
-     
+      
 <div id="ModalLogs" class="modal">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -233,17 +244,17 @@
 
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
-              <th colspan="8" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Bit&aacute;cora del sistema&nbsp;&nbsp;</b></th>
+              <th colspan="8" align="center" class="header_usuarios"> <asp:Label ID="webmaster_window_logs_title" runat="server" Text="Bitacora del Sistema"></asp:Label> </th>
         </tr> 
         <tr>
-              <td>&nbsp;Desde Fecha:&nbsp;</td>
+              <td>&nbsp;<asp:Label ID="webmaster_window_logs_fromdate" runat="server" Text="Desde Fecha:"></asp:Label>&nbsp;</td>
               <td><asp:TextBox type="DateTimePicker" TextMode="Date" runat="server" name="fechai" id="fechai" OnTextChanged="TraerLogs"  AutoPostBack="True" /></td>
               <td colspan="4"> &nbsp; </td>
-              <td>&nbsp;Hasta Fecha:&nbsp;</td>
+              <td>&nbsp;<asp:Label ID="webmaster_window_logs_todate" runat="server" Text="Hasta Fecha:"></asp:Label>&nbsp;</td>
               <td><asp:TextBox TextMode="Date" runat="server" name="fechaf" id="fechaf" OnTextChanged="TraerLogs"  AutoPostBack="True" /></td>
         </tr>
         <tr>
-              <td>&nbsp;Criticidad:&nbsp;</td>
+              <td>&nbsp; <asp:Label ID="webmaster_window_logs_critlevel" runat="server" Text="Criticidad"></asp:Label> &nbsp;</td>
               <td><asp:CheckBox runat="server" name="chk_Urgente" id="Crit_Urgente" OnCheckedChanged="TraerLogs" AutoPostBack="True" /><label for="Crit_Urgente">Urgente</label></td>
               <td><asp:CheckBox runat="server" name="chk_Error" id="Crit_Error" OnCheckedChanged="TraerLogs" AutoPostBack="True" /><label for="Crit_Error">Error</label></td>
               <td><asp:CheckBox runat="server" name="chk_Advertencia" id="Crit_Advertencia" OnCheckedChanged="TraerLogs" AutoPostBack="True" /><label for="Crit_Advertencia">Advertencia</label></td>
@@ -280,7 +291,7 @@
         <span class="close" id="close_btn4" onclick="cerrar_modal_backup()">&times;</span>
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
-              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Consola de Backup y Restore&nbsp;&nbsp;</b></th>
+              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp; <asp:Label ID="webmaster_window_backup_title" runat="server" Text="Consola de Backup y Restore"></asp:Label> &nbsp;&nbsp;</b></th>
         </tr> 
         <tr>
               <td>&nbsp;Restore:&nbsp;</td>
@@ -311,15 +322,15 @@
         <span class="close" id="close_btn6" onclick="cerrar_modal_xml()">&times;</span>
    <table class="tabla_usuarios">
         <tr class="fila_usuarios">
-              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp;Administración de Precios&nbsp;&nbsp;</b></th>
+              <th colspan="6" align="center" class="header_usuarios"><b>&nbsp;&nbsp; <asp:Label ID="webmaster_window_price_mgmt" runat="server" Text="Administracion de Precios"></asp:Label> &nbsp;&nbsp;</b></th>
         </tr> 
         <tr>
-              <td>&nbsp;Importar&nbsp;</td>
+              <td>&nbsp; <asp:Label ID="webmaster_window_price_import" runat="server" Text="Importar"></asp:Label> &nbsp;</td>
               <td colspan="4"><input id="uploadFileXml" runat="server" name="uploadFileXml" type="file" accept=".xml" /></td>
               <td><asp:Button runat='server' onClick='actualizarListaPrecios' name="BotonRestore" id="Button1" Text="Actualizar Precios" AutoPostBack="True"></asp:Button></td>
         </tr>
         <tr>
-              <td>&nbsp;Exportar&nbsp;</td>
+              <td>&nbsp; <asp:Label ID="webmaster_window_price_export" runat="server" Text="Exportar"></asp:Label> &nbsp;</td>
               <td colspan="5"><asp:Button runat='server' onClick='descargarListaPrecios' name="BotonBackup" id="Button2" Text="Exportar lista de precios" AutoPostBack="True"></asp:Button></td>
         </tr>
         <tr class="fila_usuarios">
@@ -339,33 +350,33 @@
 <table class="tabla_usuarios">
     <tr class="fila_usuarios">
         <th colspan="6" align="center" class="header_usuarios">
-            <b>&nbsp;&nbsp;Administración de productos&nbsp;&nbsp;</b>
+            <b>&nbsp;&nbsp; <asp:Label ID="webmaster_window_product_title" runat="server" Text="Administracion de Productos"></asp:Label> &nbsp;&nbsp;</b>
         </th>
     </tr>
 
     <tr>
-        <td>&nbsp;Nombre del Producto&nbsp;</td>
+        <td>&nbsp; <asp:Label ID="webmaster_window_product_productname" runat="server" Text="Nombre del producto"></asp:Label> &nbsp;</td>
         <td colspan="5">
             <input id="txtNombreProducto" runat="server" type="text" placeholder="Ingrese el nombre del producto" style="width:100%;" />
         </td>
     </tr>
 
     <tr>
-        <td>&nbsp;Precio&nbsp;</td>
+        <td>&nbsp; <asp:Label ID="webmaster_window_product_price" runat="server" Text="Precio"></asp:Label> &nbsp;</td>
         <td colspan="5">
             <input id="txtPrecioProducto" runat="server" type="text" placeholder="Ingrese el precio" style="width:100%;" />
         </td>
     </tr>
 
     <tr>
-        <td>&nbsp;Imagen&nbsp;</td>
+        <td>&nbsp; <asp:Label ID="webmaster_window_product_pic" runat="server" Text="Imagen"></asp:Label> &nbsp;</td>
         <td colspan="4">
             <asp:FileUpload ID="fileImagenProducto" runat="server" /> 
         </td>
             </tr>
 
     <tr>
-        <td>&nbsp;Categoría&nbsp;</td>
+        <td>&nbsp; <asp:Label ID="webmaster_window_product_category" runat="server" Text="Categoria"></asp:Label> &nbsp;</td>
         <td colspan="5">
             <select id="ddlCategoria" runat="server" style="width:100%;">
                 <option value="">Seleccione una categoría</option>
@@ -407,12 +418,12 @@
     <span class="close" id="close_btn7" onclick="cerrar_modal_roles()">&times;</span>
     <table class="tabla_usuarios">
         <tr align="center">
-            <td colspan="2" ><b>Administracion de roles</b></td>
+            <td colspan="2" ><b> <asp:Label ID="webmaster_window_rbac_title" runat="server" Text="Administracion de Roles"></asp:Label> </b></td>
         </tr>
 
         <tr align="center">
             <td>
-                <asp:Label ID="Label1" runat="server" Text="Seleccione un Rol"></asp:Label><br />
+                <asp:Label ID="webmaster_window_rbac_select" runat="server" Text="Seleccione un Rol"></asp:Label><br />
                     <asp:ListBox  ID="ListBoxRoles" runat="server" OnSelectedIndexChanged="ListBoxRoles_SelectedIndexChanged"></asp:ListBox>
             </td>
             <td>
@@ -422,8 +433,8 @@
             </td>
         </tr>
         <tr align="center">
-            <td>Roles</td>
-            <td>Permisos</td>
+            <td> <asp:Label ID="webmaster_window_rbac_roles" runat="server" Text="Roles"></asp:Label> </td>
+            <td> <asp:Label ID="webmaster_window_rbac_permissions" runat="server" Text="Permisos"></asp:Label> </td>
         </tr>
         <tr align="center">
             <td>
@@ -447,7 +458,7 @@
 <asp:HiddenField ID="hfModalVisible" runat="server" Value="none" />
 
 
-</form>  
+
 
         <footer>
             <br />
@@ -457,6 +468,7 @@
             <p><b>Instragram:</b> @Panneteria</p>          
         </footer>
       </div>
+        </form>  
 </body>
     <script>
         let x = getCookieValue("webmaster_modal_visible");

@@ -37,7 +37,7 @@ namespace Security
         }
         public bool Guardar(BEUsuario usuario)
         {
-            Regex re = new Regex("^[a-zA-Z]+$");
+            Regex re = new Regex("^[a-zA-Z@\\.]+$");
             if (!re.IsMatch(usuario.username))
             {
                 throw new Exception(SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["msgerror_securitylayer_invalidchars_username"].ToString());

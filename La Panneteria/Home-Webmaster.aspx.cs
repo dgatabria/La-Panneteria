@@ -1,4 +1,5 @@
-﻿using BusinessEntities;
+﻿using AbstractionLayer;
+using BusinessEntities;
 using Security;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,49 @@ using System.Xml.Linq;
 
 namespace La_Panneteria
 {
-    public partial class WebForm2 : System.Web.UI.Page
+    public partial class WebForm2 : System.Web.UI.Page, ITraducible
     {
 
+/*        public WebForm2()
+        {
+            
+            Suscribir();
+        }*/
+        public void Actualizar()
+        {
+            logout_button.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["logout"].ToString();
+            webmaster_panel_title.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_title"].ToString();
+            webmaster_button_backup_restore.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_backup"].ToString();
+            webmaster_button_logs.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_logs"].ToString();
+            webmaster_button_price_list.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_prices"].ToString();
+            webmaster_button_products_mgmt.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_product"].ToString();
+            webmaster_button_role_mgmt.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_rbac"].ToString();
+            webmaster_button_user_mgmt.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_users"].ToString();
+            webmaster_window_logs_title.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_logs_title"].ToString();
+            webmaster_window_logs_fromdate.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_logs_fromdate"].ToString();
+            webmaster_window_logs_todate.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_logs_todate"].ToString();
 
-
+            webmaster_window_logs_critlevel.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_logs_critlevel"].ToString();
+            webmaster_window_backup_title.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_backup_title"].ToString();
+            webmaster_window_price_import.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_price_import"].ToString();
+            webmaster_window_price_export.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_price_export"].ToString();
+            webmaster_window_product_productname.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_product_productname"].ToString();
+            webmaster_window_product_price.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_product_price"].ToString();
+            webmaster_window_product_pic.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_product_pic"].ToString();
+            webmaster_window_product_category.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_product_category"].ToString();
+            webmaster_window_rbac_title.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_rbac_title"].ToString();
+            webmaster_window_rbac_permissions.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_rbac_permissions"].ToString();
+            webmaster_window_price_mgmt.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_price_mgmt"].ToString();
+            webmaster_window_product_title.Text = SessionManager.GetInstance.Traductor.IdiomaSeleccionado.Palabras["webmaster_window_product_title"].ToString();
+        }
+        public void Suscribir()
+        {
+            if (SessionManager.GetInstance != null )
+            {
+                SessionManager.GetInstance.Traductor.Suscribir(this);
+            }
+            
+        }
         protected void BtnEliminarUsuario(object sender, EventArgs e)
         {
             
@@ -312,13 +351,20 @@ namespace La_Panneteria
         {
             if (!IsPostBack)
             {
+                LanguageManager lm = new LanguageManager();
                 CargarTablaUsuarios();
                 CargarTablaRBAC();
                 ListBoxRoles.AutoPostBack = true;
                 CheckBoxListPermisos.AutoPostBack = true;
                 CheckBoxListRoles.AutoPostBack = true;
+                ddl_idiomas.DataSource = lm.ListarIdiomas();
+                ddl_idiomas.DataBind();
+
+                
+                  //  FindControl("placeholder_idiomas").Controls.Add(listbox_idiomas);
             }
-            
+            CargarTablaUsuarios();
+            Suscribir();
 
         }
 
@@ -800,6 +846,14 @@ namespace La_Panneteria
 
 
             }
+        }
+
+        protected void cambiar_idioma(object sender, EventArgs e)
+        {
+            LanguageManager lm = new LanguageManager();
+            BEIdioma idiomaseleccionado = lm.ObtenerIdioma(ddl_idiomas.SelectedValue);
+            SessionManager.GetInstance.Traductor.SeleccionarIdioma(idiomaseleccionado);
+            
         }
     }
 }

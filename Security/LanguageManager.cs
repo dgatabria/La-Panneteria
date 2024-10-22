@@ -24,6 +24,21 @@ namespace Security
             return Idiomas;
         }
 
+        public BEIdioma ObtenerIdioma(int Codigo)
+        {
+
+            BEIdioma Idioma = new BEIdioma();
+            Idioma.Codigo = Codigo;
+            return bli.ListarObjeto(Idioma);
+        }
+        public BEIdioma ObtenerIdioma(string Nombre)
+        {
+
+            BEIdioma Idioma = new BEIdioma();
+            Idioma.Nombre = Nombre;
+            return bli.ListarObjeto(Idioma);
+        }
+
         public Hashtable ListarPalabras(BEIdioma idioma)
         {
             return bli.ListarPalabras(idioma);

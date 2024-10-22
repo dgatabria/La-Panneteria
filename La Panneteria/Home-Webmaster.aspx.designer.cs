@@ -15,6 +15,24 @@ namespace La_Panneteria
     {
 
         /// <summary>
+        /// label_idiomas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label_idiomas;
+
+        /// <summary>
+        /// ddl_idiomas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_idiomas;
+
+        /// <summary>
         /// logout control.
         /// </summary>
         /// <remarks>
@@ -22,6 +40,78 @@ namespace La_Panneteria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor logout;
+
+        /// <summary>
+        /// logout_button control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label logout_button;
+
+        /// <summary>
+        /// webmaster_panel_title control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_panel_title;
+
+        /// <summary>
+        /// webmaster_button_backup_restore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_button_backup_restore;
+
+        /// <summary>
+        /// webmaster_button_logs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_button_logs;
+
+        /// <summary>
+        /// webmaster_button_price_list control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_button_price_list;
+
+        /// <summary>
+        /// webmaster_button_products_mgmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_button_products_mgmt;
+
+        /// <summary>
+        /// webmaster_button_user_mgmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_button_user_mgmt;
+
+        /// <summary>
+        /// webmaster_button_role_mgmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_button_role_mgmt;
 
         /// <summary>
         /// ScriptManager1 control.
@@ -42,6 +132,24 @@ namespace La_Panneteria
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
+        /// webmaster_window_logs_title control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_logs_title;
+
+        /// <summary>
+        /// webmaster_window_logs_fromdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_logs_fromdate;
+
+        /// <summary>
         /// fechai control.
         /// </summary>
         /// <remarks>
@@ -51,6 +159,15 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.TextBox fechai;
 
         /// <summary>
+        /// webmaster_window_logs_todate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_logs_todate;
+
+        /// <summary>
         /// fechaf control.
         /// </summary>
         /// <remarks>
@@ -58,6 +175,15 @@ namespace La_Panneteria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox fechaf;
+
+        /// <summary>
+        /// webmaster_window_logs_critlevel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_logs_critlevel;
 
         /// <summary>
         /// Crit_Urgente control.
@@ -141,6 +267,15 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Button BotonDespues;
 
         /// <summary>
+        /// webmaster_window_backup_title control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_backup_title;
+
+        /// <summary>
         /// uploadFile control.
         /// </summary>
         /// <remarks>
@@ -168,6 +303,24 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Button BotonBackup;
 
         /// <summary>
+        /// webmaster_window_price_mgmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_price_mgmt;
+
+        /// <summary>
+        /// webmaster_window_price_import control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_price_import;
+
+        /// <summary>
         /// uploadFileXml control.
         /// </summary>
         /// <remarks>
@@ -186,6 +339,15 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
+        /// webmaster_window_price_export control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_price_export;
+
+        /// <summary>
         /// Button2 control.
         /// </summary>
         /// <remarks>
@@ -193,6 +355,24 @@ namespace La_Panneteria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
+
+        /// <summary>
+        /// webmaster_window_product_title control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_product_title;
+
+        /// <summary>
+        /// webmaster_window_product_productname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_product_productname;
 
         /// <summary>
         /// txtNombreProducto control.
@@ -204,6 +384,15 @@ namespace La_Panneteria
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtNombreProducto;
 
         /// <summary>
+        /// webmaster_window_product_price control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_product_price;
+
+        /// <summary>
         /// txtPrecioProducto control.
         /// </summary>
         /// <remarks>
@@ -213,6 +402,15 @@ namespace La_Panneteria
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtPrecioProducto;
 
         /// <summary>
+        /// webmaster_window_product_pic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_product_pic;
+
+        /// <summary>
         /// fileImagenProducto control.
         /// </summary>
         /// <remarks>
@@ -220,6 +418,15 @@ namespace La_Panneteria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fileImagenProducto;
+
+        /// <summary>
+        /// webmaster_window_product_category control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_product_category;
 
         /// <summary>
         /// ddlCategoria control.
@@ -249,13 +456,22 @@ namespace La_Panneteria
         protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// Label1 control.
+        /// webmaster_window_rbac_title control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label webmaster_window_rbac_title;
+
+        /// <summary>
+        /// webmaster_window_rbac_select control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_rbac_select;
 
         /// <summary>
         /// ListBoxRoles control.
@@ -292,6 +508,24 @@ namespace La_Panneteria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnBorrarRol;
+
+        /// <summary>
+        /// webmaster_window_rbac_roles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_rbac_roles;
+
+        /// <summary>
+        /// webmaster_window_rbac_permissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label webmaster_window_rbac_permissions;
 
         /// <summary>
         /// CheckBoxListRoles control.

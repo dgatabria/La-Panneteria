@@ -76,19 +76,41 @@ namespace BLL
             string Query = "ListarIdioma";
             bd = new Acceso();
             Hashtable ht = new Hashtable();
-            ht.Add("@Codigo", idioma.Codigo);
-            tablas = bd.LeerSP(Query, ht);
-            if (tablas.Rows.Count > 0)
-            {
-                foreach (DataRow fila in tablas.Rows)
-                {
-                    tmp.Codigo = Convert.ToInt32(fila["ID"]);
-                    tmp.Nombre = fila["Nombre"].ToString();
-                    tmp.Palabras = ListarPalabras(tmp);
-                }
 
+            if ( idioma.Codigo == 0)
+            {
+                Query = "ListarIdiomaPorNombre";
+                ht.Add("@Nombre", idioma.Nombre);
+                tablas = bd.LeerSP(Query, ht);
+                if (tablas.Rows.Count > 0)
+                {
+                    foreach (DataRow fila in tablas.Rows)
+                    {
+                        tmp.Codigo = Convert.ToInt32(fila["ID"]);
+                        tmp.Nombre = fila["Nombre"].ToString();
+                        tmp.Palabras = ListarPalabras(tmp);
+                    }
+
+                }
+                return tmp;
+            } else
+            {
+                ht.Add("@Codigo", idioma.Codigo);
+                tablas = bd.LeerSP(Query, ht);
+                if (tablas.Rows.Count > 0)
+                {
+                    foreach (DataRow fila in tablas.Rows)
+                    {
+                        tmp.Codigo = Convert.ToInt32(fila["ID"]);
+                        tmp.Nombre = fila["Nombre"].ToString();
+                        tmp.Palabras = ListarPalabras(tmp);
+                    }
+
+                }
+                return tmp;
             }
-            return tmp;
+
+
         }
 
         public List<BEIdioma> ListarIdiomas()

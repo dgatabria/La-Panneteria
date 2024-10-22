@@ -181,6 +181,7 @@
     <Content Include="Images\Panes\baguette.jpg" />
     <Content Include="Images\Panes\flautita.jpg" />
     <Content Include="Images\Panes\mignon.jpg" />
+    <Content Include="Images\ppal\idiomas.jpg" />
     <Content Include="Images\ppal\panaderia-bg.jpg" />
     <Content Include="Images\Salados\miga3anana.jpg" />
     <Content Include="Images\Salados\miga3huevo.jpg" />
